@@ -292,7 +292,12 @@ def main():
             t.state = final_pref_dom.get_domain_state(t.trial_data)
     
     # Save outputs
-    save_detailed_results(all_trials, best_config)
+    other_configs = {
+        'sem': res_sem,
+        'nopref': res_nopref,
+        'nocausal': res_nocausal
+    }
+    save_detailed_results(all_trials, best_config, other_configs=other_configs)
     if not os.path.exists('outputs'):
         os.makedirs('outputs')
 

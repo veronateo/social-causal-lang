@@ -62,46 +62,97 @@ def run_optimization_worker(seed_offset, bounds, trials, necessity_mode, ablatio
 
 def save_detailed_results(trials: List[TrialObj], config: ModelConfig,
                           output_csv: str = 'outputs/model_predictions_full.csv', 
-                          output_json: str = 'outputs/model_states.json'):
+                          output_json: str = 'outputs/model_states.json',
+                          other_configs: Dict[str, Any] = None):
     """Save detailed trial states and model predictions to CSV and JSON."""
     print(f"Saving detailed results to {output_csv}...")
     
     # Ensure directory exists
     os.makedirs(os.path.dirname(output_csv), exist_ok=True)
     
-    # Models
-    # 1. Full Model
+    if other_configs is None:
+        other_configs = {}
+
+    # Setup models and domains
+    
+    # Helper config reconstruction
+    def make_config(res_dict, fallback_config):
+        if res_dict is None: return fallback_config
+        return ModelConfig(
+            step_cost=res_dict.get('step_cost', fallback_config.step_cost),
+            temperature=res_dict.get('temperature', fallback_config.temperature),
+            alpha=res_dict.get('alpha', fallback_config.alpha),
+            alignment_mode='soft',
+            lambda_act=res_dict.get('lambda_act', fallback_config.lambda_act),
+            lambda_align=res_dict.get('lambda_align', fallback_config.lambda_align),
+            necessity_mode=res_dict.get('necessity_mode', fallback_config.necessity_mode),
+            cost_caused=res_dict.get('cost_caused', fallback_config.cost_caused),
+            cost_enabled=res_dict.get('cost_enabled', fallback_config.cost_enabled),
+            cost_allowed=res_dict.get('cost_allowed', fallback_config.cost_allowed),
+            cost_mnd=res_dict.get('cost_made_no_difference', fallback_config.cost_mnd),
+            reward_scale=1.0
+        )
+
+    # 1. Full Model (Base)
     rsa_full = RSACausalVerbModel(
         rationality_alpha=config.alpha, 
         lambda_act=config.lambda_act,
         lambda_align=config.lambda_align,
-        necessity_mode=config.necessity_mode
+        necessity_mode=config.necessity_mode,
+        costs={k: getattr(config, f"cost_{k}", 0.0) for k in ['caused', 'enabled', 'allowed']}
     )
-    
-    # 2. No Preference (No Aligned)
+    print(f"rsa_full config: {config}")
+
+    # 2. No Preference
+    conf_nopref = make_config(other_configs.get('nopref'), config)
     rsa_no_pref = RSACausalVerbModel(
-        rationality_alpha=config.alpha, 
+        rationality_alpha=conf_nopref.alpha, 
         ablation='no_aligned',
-        lambda_act=config.lambda_act,
-        lambda_align=config.lambda_align,
-        necessity_mode=config.necessity_mode
+        lambda_act=conf_nopref.lambda_act,
+        lambda_align=conf_nopref.lambda_align,
+        necessity_mode=conf_nopref.necessity_mode,
+        costs={k: getattr(conf_nopref, f"cost_{k}", 0.0) for k in ['caused', 'enabled', 'allowed']}
     )
-    
-    # 3. No Causal (No Necessity)
+    print(f"rsa_no_pref config: {conf_nopref}")
+    domains_nopref = {
+        'physical': PhysicalDomain(config=conf_nopref),
+        'preference': PreferenceDomain(config=conf_nopref),
+        'belief': BeliefDomain(config=conf_nopref)
+    }
+
+    # 3. No Causal
+    conf_nocausal = make_config(other_configs.get('nocausal'), config)
     rsa_no_causal = RSACausalVerbModel(
-        rationality_alpha=config.alpha, 
+        rationality_alpha=conf_nocausal.alpha, 
         ablation='no_causal',
-        lambda_act=config.lambda_act,
-        lambda_align=config.lambda_align,
-        necessity_mode=config.necessity_mode
+        lambda_act=conf_nocausal.lambda_act,
+        lambda_align=conf_nocausal.lambda_align,
+        necessity_mode=conf_nocausal.necessity_mode,
+        costs={k: getattr(conf_nocausal, f"cost_{k}", 0.0) for k in ['caused', 'enabled', 'allowed']}
     )
+    print(f"rsa_no_causal config: {conf_nocausal}")
+    domains_nocausal = {
+        'physical': PhysicalDomain(config=conf_nocausal),
+        'preference': PreferenceDomain(config=conf_nocausal),
+        'belief': BeliefDomain(config=conf_nocausal)
+    }
+
+    # 4. Semantics Only
+    # Alpha is unused for semantics, setting to default 1.0 for config validity
+    conf_sem = make_config(other_configs.get('sem'), config)
+    conf_sem.alpha = 1.0
     
-    # 4. Semantics Only (classifier only, using fitted semantics)
     classifier = InertialVerbClassifier(
-        lambda_act=config.lambda_act,
-        lambda_align=config.lambda_align,
-        necessity_mode=config.necessity_mode
+        lambda_act=conf_sem.lambda_act,
+        lambda_align=conf_sem.lambda_align,
+        necessity_mode=conf_sem.necessity_mode
     )
+    print(f"rsa_sem config: {conf_sem}")
+    domains_sem = {
+        'physical': PhysicalDomain(config=conf_sem),
+        'preference': PreferenceDomain(config=conf_sem),
+        'belief': BeliefDomain(config=conf_sem)
+    }
     
     headers = [
         'domain', 'trial_id', 'human_n',
@@ -122,17 +173,23 @@ def save_detailed_results(trials: List[TrialObj], config: ModelConfig,
         writer.writeheader()
         
         for t in trials:
-            # Get model predictions
-            probs_full = rsa_full.pragmatic_speaker_s1(t.state)
-            probs_nopref = rsa_no_pref.pragmatic_speaker_s1(t.state)
-            probs_nocausal = rsa_no_causal.pragmatic_speaker_s1(t.state)
+            # 1. Full Model (Uses t.state which is based on 'config')
+            state_full = t.state
+            probs_full = rsa_full.pragmatic_speaker_s1(state_full)
             
-            # Semantics Only (Normalize truth values)
-            sem_vals = classifier.get_verb_probabilities(t.state)
-            # Already normalized by get_verb_probabilities
-            probs_sem = sem_vals
+            # 2. No Pref
+            state_nopref = domains_nopref[t.domain_name].get_domain_state(t.trial_data)
+            probs_nopref = rsa_no_pref.pragmatic_speaker_s1(state_nopref)
             
-            # Identify unique semantic state key 
+            # 3. No Causal
+            state_nocausal = domains_nocausal[t.domain_name].get_domain_state(t.trial_data)
+            probs_nocausal = rsa_no_causal.pragmatic_speaker_s1(state_nocausal)
+            
+            # 4. Semantics
+            state_sem = domains_sem[t.domain_name].get_domain_state(t.trial_data)
+            probs_sem = classifier.get_verb_probabilities(state_sem)
+            
+            # Identify unique semantic state key (Using Full Model's state for grouping/logging)
             nec_val = getattr(t.state, f'necessity_{config.necessity_mode}', 0.0)
             state_key = (t.state.changed, t.state.aligned, t.state.wizard_acted, nec_val)
             state_str = str(state_key)

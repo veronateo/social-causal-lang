@@ -59,7 +59,7 @@ def load_predictions(csv_path: str) -> Dict[str, List[Dict[str, Any]]]:
                 data_by_domain[domain].append(entry)
     return data_by_domain
 
-OUTPUT_DIR = "plots/paper_figures"
+OUTPUT_DIR = "outputs/plots/"
 PREDICTIONS_CSV = 'outputs/model_predictions_full.csv'
 VERBS = ['caused', 'enabled', 'allowed', 'made_no_difference']
 VERB_LABELS = ['Caused', 'Enabled', 'Allowed', 'Made no difference']
@@ -74,7 +74,7 @@ def load_and_bootstrap_all_domains(base_dir="data"):
     }
     
     domain_errors = {}
-    print("Bootstrapping error bars for all domains (this may take a moment)...")
+    print("Bootstrapping error bars for all domains...")
     
     for name, subdir in domains.items():
         path = os.path.join(base_dir, subdir)
@@ -256,7 +256,7 @@ def plot_scatter_comparison(all_results, domain_errors):
 
 
     # Load global metrics
-    metrics_path = 'outputs/global_fit_metrics.json'
+    metrics_path = 'outputs/model_results.json'
     global_metrics = {}
     if os.path.exists(metrics_path):
         with open(metrics_path, 'r') as f:
@@ -293,9 +293,9 @@ def plot_scatter_comparison(all_results, domain_errors):
         ax.plot([0, 1], [0, 1], color='black', linestyle=(0, (4, 4)), alpha=0.2, zorder=0)
         
         # Stats
-        if m in global_metrics:
+        if 'global_fits' in global_metrics and m in global_metrics['global_fits']:
             # Use pre-computed global metrics with SE
-            gm = global_metrics[m]
+            gm = global_metrics['global_fits'][m]
             r, r_se = gm['r'], gm['r_se']
             rmse, rmse_se = gm['rmse'], gm['rmse_se']
             stats_text = f"$r={r:.2f}$\nRMSE$={rmse:.2f}$"
@@ -355,7 +355,7 @@ def plot_scatter_comparison(all_results, domain_errors):
                handler_map={HeaderItem: HandlerHeader()})
     
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    save_path = os.path.join(OUTPUT_DIR, "model_scatter_row.png")
+    save_path = os.path.join(OUTPUT_DIR, "model_scatter.png")
     plt.savefig(save_path, dpi=1200, bbox_inches='tight')
     print(f"Saved {save_path}")
 
@@ -367,6 +367,9 @@ def main():
         # return
         
     all_results = None
+    if not os.path.exists('outputs/plots/'):
+        os.makedirs('outputs/plots/')
+    
     if os.path.exists(PREDICTIONS_CSV):
         all_results = load_predictions(PREDICTIONS_CSV)
         
