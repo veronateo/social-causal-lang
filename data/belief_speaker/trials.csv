@@ -1,0 +1,15 @@
+trial_id,scenario_description,outcome_side
+trial_a,"No initial belief, wizard shows true sign, farmer listens to wizard, farmer gets gold",right
+trial_b,"No initial belief, wizard shows false sign, farmer listens to wizard, farmer gets rocks",left
+trial_c,"True initial belief, wizard shows false sign, farmer listens to wizard, farmer gets rocks",right
+trial_d,"False initial belief, wizard shows true sign, farmer listens to wizard, farmer gets gold",left
+trial_e,"True initial belief, wizard shows true sign, farmer listens to wizard, farmer gets gold",right
+trial_f,"False initial belief, wizard shows false sign, farmer listens to wizard, farmer gets rocks",right
+trial_g,"True initial belief, wizard does nothing, farmer gets gold",right
+trial_h,"False initial belief, wizard does nothing, farmer gets rocks",right
+trial_i,"True initial belief, wizard shows false sign, farmer ignores wizard, farmer gets gold",right
+trial_j,"False initial belief, wizard shows true sign, farmer ignores wizard, farmer gets rocks",left
+trial_k,"No initial belief, wizard does nothing, farmer guesses correctly, farmer gets gold",left
+trial_l,"No initial belief, wizard does nothing, farmer guesses incorrectly, farmer gets rocks",left
+trial_m,"No initial belief, wizard shows true sign, farmer ignores wizard, farmer gets rocks",left
+trial_n,"No initial belief, wizard shows false sign, farmer ignores wizard, farmer gets gold",left

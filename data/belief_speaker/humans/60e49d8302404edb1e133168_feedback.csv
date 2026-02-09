@@ -1,0 +1,14 @@
+age,gender,race,ethnicity,factors,feedback,rt
+50,Female,Asian,Non-Hispanic,"if the initial thought of the farmer fits the wizard's suggestion, and the result was gold then the wizard only enabled
+
+if the initial thought of the farmer was opposite the wizard's suggestion, and the result was gold then the wizard caused it
+
+if the initial thought of the farmer fit the wizard's suggestion, and the result was rocks then the wizard caused it
+
+if the initial thought of the farmer opposite the wizard's suggestion, and the result was rocks then the wizard also caused it
+
+if the wizard had not suggestion, regardless of initial thought, the wizard did nothing to contribute to the outcome
+
+if the farmer had no initial thought whatsoever and they listened to the wizard then wizard caused it, regardless of outcome.  if the farmer had no initial thought whatsoever and they did not listen to the wizard, then regardless of outcome, the wizard did nothing to contribute to outcome
+
+",no,631295

@@ -1,46 +1,22 @@
 from matplotlib import rcParams
 
 
-class Colors:
-    OKABE_ITO = {
-        'light_blue': '#56B4E9',
-        'orange': '#E69F00',
-        'green': '#009E73',
-        'yellow': '#F0E442',
-        'blue': '#0072B2',
-        'amber': '#D55E00',
-        'pink': '#CC79A7',
-        'black': '#000000'
-    }
-
-    # Semantic aliases
-    SKY_BLUE = OKABE_ITO['light_blue']
-    BLUE = OKABE_ITO['blue']
-    ORANGE = OKABE_ITO['orange']
-    TEAL_GREEN = OKABE_ITO['green']
-    PINK = OKABE_ITO['pink']
-    AMBER = OKABE_ITO['amber']
-    YELLOW = OKABE_ITO['yellow']
-    BLACK = OKABE_ITO['black']
-    LIGHT_GRAY = '#D5D5D5'
-    GREEN = '#58C24F'
-    RED = '#FA5A4D'
-    LIGHT_RED = '#F7A5A1'
-    LIGHT_GREEN = '#AFE29F'
-
-
-colors = Colors()
-
+COLORS = {
+    'caused': '#e74c3c',
+    'enabled': '#f39c12',
+    'allowed': '#3498db',
+    'made_no_difference': '#95a5a6'
+}
 
 rcParams.update({
     # Font
     'font.family': 'sans-serif',
-    'font.sans-serif': ['Helvetica', 'DejaVu Sans', 'Arial', 'sans-serif'],
+    'font.sans-serif': ['Helvetica'],
     'font.size': 10,
     'font.weight': 'normal',
 
     # Figure
-    'figure.dpi': 300,
+    'figure.dpi': 600,
     'figure.facecolor': 'white',
     'figure.constrained_layout.use': True,
 
@@ -83,7 +59,7 @@ rcParams.update({
     'grid.alpha': 0.3,
 
     # Saving
-    'savefig.dpi': 300,
+    'savefig.dpi': 600,
     'savefig.bbox': 'tight',
     'savefig.facecolor': 'white',
 })

@@ -1,0 +1,15 @@
+trial_id,response,rt
+trial_b,made_no_difference,32729
+trial_i,made_no_difference,33459
+trial_f,caused,27451
+trial_h,caused,19084
+trial_g,enabled,31030
+trial_j,enabled,20555
+trial_e,enabled,19878
+trial_k,caused,23356
+trial_c,enabled,23660
+trial_m,enabled,22558
+trial_d,allowed,21995
+trial_a,allowed,33764
+trial_n,allowed,22352
+trial_l,made_no_difference,17268

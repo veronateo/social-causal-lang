@@ -8,7 +8,6 @@ class DomainState:
     changed: float         # Degree of change (Observable): |actual - expected|
     aligned: float         # Degree of alignment (Inferred): P(actual = preferred)
     wizard_acted: float    # Degree of wizard intervention (Observable): 0.0 or 1.0
-    # control: float         # Capacity (Inferred): Did wizard have power to influence?
     actual_outcome: str    
     expected_outcome: str  
     preferred_outcome: str 
