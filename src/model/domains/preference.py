@@ -1,5 +1,5 @@
 from typing import Dict, Any, Optional, Literal, Union
-from .base import Domain, DomainState
+from .base import Domain, WorldState
 from .preference_inference import BasketPreferenceInference
 from ..config import ModelConfig
 
@@ -34,7 +34,6 @@ class PreferenceDomain(Domain):
             temperature = config.temperature
             step_cost = config.step_cost
             alignment_mode = config.alignment_mode
-            scale = config.reward_scale
         
         self.inference = BasketPreferenceInference(
             theta_bins=theta_bins,
@@ -86,7 +85,7 @@ class PreferenceDomain(Domain):
         
         return self.inference.get_preferred_side(theta, final_config, farmer_pos)
 
-    def get_domain_state(self, trial_data: Dict[str, Any], theta: Optional[float] = None) -> DomainState:
+    def get_domain_state(self, trial_data: Dict[str, Any], theta: Optional[float] = None) -> WorldState:
         # Normalize
         data = self.normalize_trial(trial_data)
         
@@ -94,14 +93,14 @@ class PreferenceDomain(Domain):
         actual_dir = data.get('final_outcome')
         wizard_action = data.get('wizard_action', data.get('wizardAction', {}))
         
-        # Handle various formats for wizard_action
+        # A — Wizard acted?
         if isinstance(wizard_action, dict):
             w_type = wizard_action.get('type', 'nothing')
-            wizard_acted = (w_type != 'nothing')
+            acted = 1.0 if w_type != 'nothing' else 0.0
         elif isinstance(wizard_action, str):
-            wizard_acted = (wizard_action != 'nothing')
+            acted = 1.0 if wizard_action != 'nothing' else 0.0
         else:
-            wizard_acted = False
+            acted = 0.0
         
     def compute_necessity(self, trial_data: Dict[str, Any], posterior: Dict[float, float]) -> Dict[str, float]:
         """
@@ -145,7 +144,7 @@ class PreferenceDomain(Domain):
                 u_right = self.inference.basket_utility(cf_config['right'], theta, farmer_pos, 'right')
                 p_right = self.inference.choice_probability(u_left, u_right, 'right')
                 
-                # Probability of DIFFERENT outcome
+                # Probability of different outcome
                 if actual_outcome == 'left':
                     p_diff = p_right
                 else: # actual == 'right'
@@ -159,20 +158,6 @@ class PreferenceDomain(Domain):
         nec_control = action_diff_probs.get('nothing_middle', 0.0)
         
         # 2. Max Necessity (vs action that causes most change)
-        # Note: We compare actual to specific alternatives. 
-        # If actual action was 'nothing', then nec_control is 0.
-        # But maybe 'add_apple' WOULD have changed it? 
-        # "Necessity" usually means "The outcome depended on what I ACTUALLY did".
-        # If I did nothing, and outcome happened, did it depend on me doing nothing? 
-        # Yes, if doing something else would have changed it.
-        # So Max diff is valid even for omissions.
-        
-        # Exclude the actual action from the set of alternatives?
-        # Ideally yes, but if we include it, diff should be 0 (or close to 0 due to softmax noise? No, observed outcome is fixed).
-        # Actually, here we compare "Counterfactual Outcome" vs "Actual Observed Outcome".
-        # If CF action == Actual action, then P(different) depends on softmax noise vs actual observation.
-        # But strictly, necessity asks: "If I switched to A', would O change?"
-        
         nec_max = max(action_diff_probs.values())
         
         # Average Necessity (Alternatives Only)
@@ -201,7 +186,7 @@ class PreferenceDomain(Domain):
             'debug_info': action_diff_probs
         }
 
-    def get_domain_state(self, trial_data: Dict[str, Any], theta: Optional[float] = None) -> DomainState:
+    def get_domain_state(self, trial_data: Dict[str, Any], theta: Optional[float] = None) -> WorldState:
         # Normalize
         data = self.normalize_trial(trial_data)
         
@@ -209,18 +194,14 @@ class PreferenceDomain(Domain):
         actual_dir = data.get('final_outcome')
         wizard_action = data.get('wizard_action', data.get('wizardAction', {}))
         
-        # Handle various formats for wizard_action
+        # A — Wizard acted?
         if isinstance(wizard_action, dict):
             w_type = wizard_action.get('type', 'nothing')
-            wizard_acted = (w_type != 'nothing')
+            acted = 1.0 if w_type != 'nothing' else 0.0
         elif isinstance(wizard_action, str):
-            wizard_acted = (wizard_action != 'nothing')
+            acted = 1.0 if wizard_action != 'nothing' else 0.0
         else:
-            wizard_acted = False
-        
-        # Changed: whether actual outcome differs from expected (initial direction)
-        changed = 1.0 if actual_dir != expected_dir else 0.0
-        wizard_acted_float = 1.0 if wizard_acted else 0.0
+            acted = 0.0
         
         # Get final basket configuration
         initial_config = data.get('initial_config', data.get('initialConfig', {}))
@@ -236,35 +217,30 @@ class PreferenceDomain(Domain):
         else:
             posterior = self.inference.infer_preference_distribution(trial_data)
             
-        # Aligned: probability that actual outcome matches farmer's preference
+        # V — Value alignment: probability that actual outcome matches farmer's preference
         if self.alignment_mode == 'hard':
-            # Hard alignment: Σ P(θ|e) × I(preferred(θ) = actual)
             aligned = sum(
                 prob for t, prob in posterior.items()
                 if self._get_preferred_side(t, trial_data) == actual_dir
             )
         else:  # soft
-            # Soft alignment: Σ P(θ|e) × P(actual | θ, softmax)
             aligned = sum(
                 prob * self.inference.alignment_probability(t, actual_dir, final_config, farmer_pos)
                 for t, prob in posterior.items()
             )
         
-        # Compute Necessity Variants
+        # C — Counterfactual necessity (avg over alternative actions)
         nec_stats = self.compute_necessity(trial_data, posterior)
         
         preferred_outcome = 'probabilistic' if theta is None else self._get_preferred_side(theta, trial_data)
         
-        return DomainState(
-            changed=changed,
+        return WorldState(
+            necessity=nec_stats['avg'],
+            acted=acted,
             aligned=aligned,
-            wizard_acted=wizard_acted_float,
             actual_outcome=actual_dir,
             expected_outcome=expected_dir,
             preferred_outcome=preferred_outcome,
-            necessity_control=nec_stats['control'],
-            necessity_max=nec_stats['max'],
-            necessity_avg=nec_stats['avg'],
             debug_necessity_info=nec_stats.get('debug_info'),
             debug_posterior=posterior
         )

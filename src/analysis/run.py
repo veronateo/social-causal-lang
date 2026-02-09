@@ -30,18 +30,11 @@ def main():
         
         # 2. Setup Model
         if model_type == 'sem':
-            model = InertialVerbClassifier(
-                lambda_act=config.lambda_act,
-                lambda_align=config.lambda_align,
-                necessity_mode=config.necessity_mode
-            )
+            model = Semantics()
         else:
             model = RSACausalVerbModel(
                 rationality_alpha=config.alpha,
                 ablation=ablation,
-                lambda_act=config.lambda_act,
-                lambda_align=config.lambda_align,
-                necessity_mode=config.necessity_mode,
                 costs={
                     'caused': config.cost_caused,
                     'enabled': config.cost_enabled,
@@ -123,10 +116,6 @@ def main():
             temperature=res_dict['temperature'],
             alpha=res_dict.get('alpha', 1.0),
             alignment_mode='soft',
-            lambda_act=res_dict['lambda_act'],
-            lambda_align=res_dict['lambda_align'],
-            necessity_mode=res_dict['necessity_mode'],
-            reward_scale=1.0
         )
         
         # 2. Recreate Domain Models
@@ -136,18 +125,11 @@ def main():
         
         # 3. Setup Model
         if model_type == 'sem':
-            model = InertialVerbClassifier(
-                lambda_act=config.lambda_act,
-                lambda_align=config.lambda_align,
-                necessity_mode=config.necessity_mode
-            )
+            model = Semantics()
         else:
             model = RSACausalVerbModel(
                 rationality_alpha=config.alpha,
                 ablation=ablation,
-                lambda_act=config.lambda_act,
-                lambda_align=config.lambda_align,
-                necessity_mode=config.necessity_mode,
                 costs={
                     'caused': res_dict.get('cost_caused', 0.0),
                     'enabled': res_dict.get('cost_enabled', 0.0),
@@ -220,22 +202,15 @@ def main():
     # helper for global fits
     def fit_global_variant(name, ablation=None, model_type='rsa'):
         print(f"\nFitting Global {name}...")
-        best_var_res = None
-        # modes = ['control', 'max', 'avg']
-        modes = ['avg']
-        for m in modes:
-            if model_type == 'sem':
-                res = fit_model_semantics_only(all_trials, necessity_mode=m)
-            else:
-                res = fit_full_model(all_trials, necessity_mode=m, ablation=ablation)
-            
-            if best_var_res is None or res['nll'] < best_var_res['nll']:
-                best_var_res = res
+        if model_type == 'sem':
+            res = fit_model_semantics_only(all_trials)
+        else:
+            res = fit_full_model(all_trials, ablation=ablation)
         
         # Convert total NLL to average NLL
-        best_var_res['avg_nll'] = best_var_res['nll'] / len(all_trials)
-        print(f"Best {name}: {best_var_res['necessity_mode']}, Avg NLL={best_var_res['avg_nll']:.4f}")
-        return best_var_res
+        res['avg_nll'] = res['nll'] / len(all_trials)
+        print(f"Best {name}: Avg NLL={res['avg_nll']:.4f}")
+        return res
 
 
     # 1. Global Fits
@@ -247,9 +222,7 @@ def main():
     best_res = res_full # For saving
             
     print(f"\nBest Overall Fit:")
-    print(f"Best Mode: {best_res['necessity_mode']}")
     print(f"Best Parameters: step_cost={best_res['step_cost']:.3f}, temperature={best_res['temperature']:.3f}, alpha={best_res['alpha']:.3f}")
-    print(f"Semantics: λact={best_res['lambda_act']:.2f}, λalign={best_res['lambda_align']:.2f}")
     
     collected_metrics['full'] = compute_and_print_fit_stats(all_trials, best_res, "Full Model", ablation=None)
     
@@ -271,14 +244,10 @@ def main():
         temperature=best_res['temperature'], 
         alpha=best_res['alpha'], 
         alignment_mode='soft',
-        lambda_act=best_res['lambda_act'],
-        lambda_align=best_res['lambda_align'],
         cost_enabled=best_res.get('cost_enabled', 0.0),
         cost_allowed=best_res.get('cost_allowed', 0.0),
         cost_mnd=best_res.get('cost_made_no_difference', 0.0),
         cost_caused=best_res.get('cost_caused', 0.0),
-        necessity_mode=best_res['necessity_mode'],
-        reward_scale=1.0
     )
     final_phys_dom = PhysicalDomain(config=best_config)
     final_pref_dom = PreferenceDomain(config=best_config)
@@ -326,9 +295,8 @@ def main():
         
         # 1. Semantics Only (Fitted)
         best_sem_res = None
-        # for m in ['control', 'max', 'avg']:
         for m in ['avg']:
-            res = fit_model_semantics_only(train_set, necessity_mode=m)
+            res = fit_model_semantics_only(train_set)
             if best_sem_res is None or res['nll'] < best_sem_res['nll']:
                 best_sem_res = res
         
@@ -338,23 +306,16 @@ def main():
             temperature=best_sem_res['temperature'],
             alpha=1.0, 
             alignment_mode='soft',
-            lambda_act=best_sem_res['lambda_act'],
-            lambda_align=best_sem_res['lambda_align'],
-            necessity_mode=best_sem_res['necessity_mode']
         )
         nll_sem, r_sem, rmse_sem = evaluate_performance(test_set, sem_config, model_type='sem')
         
         # Helper to fit, update test states, and evaluate
         def fit_eval_model_cv(ablation=None):
             # Fit on Train: try all necessity modes
-            # modes = ['control', 'max', 'avg']
-            modes = ['avg']
             best_train_res = None
             
-            for m in modes:
-                res = fit_full_model(train_set, necessity_mode=m, ablation=ablation)
-                if best_train_res is None or res['nll'] < best_train_res['nll']:
-                    best_train_res = res
+            res = fit_full_model(train_set, ablation=ablation)
+            best_train_res = res
             
             # Create config with best trained params
             config = ModelConfig(
@@ -362,14 +323,10 @@ def main():
                 temperature=best_train_res['temperature'],
                 alpha=best_train_res['alpha'],
                 alignment_mode='soft',
-                lambda_act=best_train_res['lambda_act'],
-                lambda_align=best_train_res['lambda_align'],
                 cost_enabled=best_train_res.get('cost_enabled', 0.0),
                 cost_allowed=best_train_res.get('cost_allowed', 0.0),
                 cost_mnd=best_train_res.get('cost_made_no_difference', 0.0),
                 cost_caused=best_train_res.get('cost_caused', 0.0),
-                necessity_mode=best_train_res['necessity_mode'],
-                reward_scale=1.0
             )
             
             # Evaluate on test set with config
@@ -403,7 +360,7 @@ def main():
         
         # Print optimized params from Full Model
         params_str = (f"c={res_full_cv['step_cost']:.2f},T={res_full_cv['temperature']:.2f},"
-                      f"Act={res_full_cv['lambda_act']:.2f},Ali={res_full_cv['lambda_align']:.2f}")
+                      f"α={res_full_cv['alpha']:.2f}")
         
         print(f"{fold_idx:<6} | {params_str:<30} | {nll_sem:<8.4f} | {nll_full:<8.4f} | {nll_nopref:<8.4f} | {nll_no_causal:<8.4f}")
         fold_idx += 1

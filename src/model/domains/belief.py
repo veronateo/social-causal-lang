@@ -1,5 +1,5 @@
 from typing import Dict, Any, Optional, Literal
-from .base import Domain, DomainState
+from .base import Domain, WorldState
 import random
 import math
 from ..config import ModelConfig
@@ -197,7 +197,7 @@ class BeliefDomain(Domain):
             'debug_info': action_diff_probs
         }
 
-    def get_domain_state(self, trial_data: Dict[str, Any], theta: Optional[float] = None) -> DomainState:
+    def get_domain_state(self, trial_data: Dict[str, Any], theta: Optional[float] = None) -> WorldState:
         # Parse state
         state = self._parse_scenario(trial_data)
         
@@ -214,60 +214,37 @@ class BeliefDomain(Domain):
             state['latent_guess']
         )
 
-        
         if inertial_prob > 0.5:
             expected_outcome = 'gold'
-            expected_val = 1.0
         elif inertial_prob < 0.5:
             expected_outcome = 'rocks'
-            expected_val = 0.0
         else:
             expected_outcome = 'uncertain'
-            expected_val = 0.5
-            
-        # Changed
-        # 1.0 if actual outcome differs from inertial expectation.
-        # If inertial is uncertain (0.5), and actual is 0 or 1, difference is 0.5.
-        changed = abs(actual_val - inertial_prob)
         
-        # Aligned
-        # Aligned: Did the outcome match the goal (Prefer Gold)?
-        # For social evaluation, "Aligned" means getting what they actually wanted.
+        # V — Value alignment: did outcome match farmer's goal (prefer Gold)?
         if self.alignment_mode == 'hard':
             aligned = actual_val
         else:
-            # Soft alignment for belief: how much more desirable is this outcome than the alternative?
-            # Since Gold=1.0 and Rocks=0.0, we just use actual_val as the desirability score.
-            # Update: Make consistent with other domains by using softmax probability
-            # aligned = P(choice | preference)
-            # If Actual=Gold (1.0), aligned = P(Gold | Gold>Rocks)
-            # If Actual=Rocks (0.0), aligned = P(Rocks | Gold>Rocks)
-            
-            p_gold = self._softmax_prob(1.0, 0.0) # Prob of choosing Gold given Gold>Rocks
-            if actual_val == 1.0:
-                aligned = p_gold
-            else:
-                aligned = 1.0 - p_gold
+            # Soft alignment: P(choice | preference) via softmax
+            p_gold = self._softmax_prob(1.0, 0.0)
+            aligned = p_gold if actual_val == 1.0 else 1.0 - p_gold
         
-        # Wizard acted?
+        # A — Wizard acted?
         wizard_action = state['wizard_action']
-        wizard_acted = 1.0 if wizard_action != 'nothing' else 0.0
+        acted = 1.0 if wizard_action != 'nothing' else 0.0
         
-        # Necessity
+        # C — Counterfactual necessity (avg over alternative actions)
         nec_stats = self.compute_necessity(state)
         
         preferred_outcome = 'gold'
 
-        return DomainState(
-            changed=changed,
+        return WorldState(
+            necessity=nec_stats['avg'],
+            acted=acted,
             aligned=aligned,
-            wizard_acted=wizard_acted,
             actual_outcome=actual_outcome,
             expected_outcome=expected_outcome,
             preferred_outcome=preferred_outcome,
-            necessity_control=nec_stats['control'],
-            necessity_max=nec_stats['max'],
-            necessity_avg=nec_stats['avg'],
             debug_necessity_info=nec_stats.get('debug_info'),
             debug_posterior={'initial_belief': state.get('initial_belief'), 'trust': state.get('farmer_trust')}
         )

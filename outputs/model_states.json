@@ -1,0 +1,1314 @@
+{
+  "(np.float64(0.9793585884908078), 1.0, np.float64(0.10046550315539582))": {
+    "state": {
+      "necessity": 0.9793585884908078,
+      "acted": 1.0,
+      "aligned": 0.10046550315539582
+    },
+    "full": {
+      "caused": 0.5021222072090455,
+      "enabled": 0.24669397261813036,
+      "allowed": 0.1818448824179461,
+      "made_no_difference": 0.06933893775487802
+    },
+    "nopref": {
+      "caused": 0.3246040857690812,
+      "enabled": 0.3246040857690812,
+      "allowed": 0.2386872854062844,
+      "made_no_difference": 0.11210454305555324
+    },
+    "nocausal": {
+      "caused": 0.35572174843587046,
+      "enabled": 0.20290838327771313,
+      "allowed": 0.16040361204172318,
+      "made_no_difference": 0.28096625624469324
+    },
+    "sem": {
+      "caused": 0.538759399376407,
+      "enabled": 0.20919432181767422,
+      "allowed": 0.20919432181767422,
+      "made_no_difference": 0.042851956988244615
+    },
+    "trials": [
+      {
+        "domain": "physical",
+        "trial_id": "trial_a",
+        "theta": 1.0
+      }
+    ]
+  },
+  "(np.float64(2.0109251791303467e-16), 1.0, np.float64(0.5000000039012273))": {
+    "state": {
+      "necessity": 2.0109251791303467e-16,
+      "acted": 1.0,
+      "aligned": 0.5000000039012273
+    },
+    "full": {
+      "caused": 0.07147052432509211,
+      "enabled": 0.09695817301217258,
+      "allowed": 0.07147052432509084,
+      "made_no_difference": 0.7601007783376443
+    },
+    "nopref": {
+      "caused": 0.07467581694809367,
+      "enabled": 0.07467581694809367,
+      "allowed": 0.05491048577101691,
+      "made_no_difference": 0.7957378803327958
+    },
+    "nocausal": {
+      "caused": 0.2794198122748696,
+      "enabled": 0.27918159977623325,
+      "allowed": 0.2206992944121163,
+      "made_no_difference": 0.22069929353678083
+    },
+    "sem": {
+      "caused": 0.09101133327560125,
+      "enabled": 0.04968448476274075,
+      "allowed": 0.04968448476274075,
+      "made_no_difference": 0.8096196971989172
+    },
+    "trials": [
+      {
+        "domain": "physical",
+        "trial_id": "trial_b",
+        "theta": 0.0
+      }
+    ]
+  },
+  "(np.float64(0.9166666660204662), 1.0, np.float64(0.4583333293924414))": {
+    "state": {
+      "necessity": 0.9166666660204662,
+      "acted": 1.0,
+      "aligned": 0.4583333293924414
+    },
+    "full": {
+      "caused": 0.3423272568198805,
+      "enabled": 0.328300168859519,
+      "allowed": 0.24199904428335253,
+      "made_no_difference": 0.08737353003724793
+    },
+    "nopref": {
+      "caused": 0.33441850626650366,
+      "enabled": 0.33441850626650366,
+      "allowed": 0.24590400721930572,
+      "made_no_difference": 0.08525898024768701
+    },
+    "nocausal": {
+      "caused": 0.2835492308788207,
+      "enabled": 0.27505373546453876,
+      "allowed": 0.21743612541476795,
+      "made_no_difference": 0.22396090824187245
+    },
+    "sem": {
+      "caused": 0.41643275779388905,
+      "enabled": 0.29125914634800776,
+      "allowed": 0.29125914634800776,
+      "made_no_difference": 0.0010489495100955016
+    },
+    "trials": [
+      {
+        "domain": "physical",
+        "trial_id": "trial_c",
+        "theta": 0.0
+      }
+    ]
+  },
+  "(np.float64(0.0), 1.0, np.float64(0.5000000039012273))": {
+    "state": {
+      "necessity": 0.0,
+      "acted": 1.0,
+      "aligned": 0.5000000039012273
+    },
+    "full": {
+      "caused": 0.07147052432509,
+      "enabled": 0.09695817301217134,
+      "allowed": 0.07147052432509,
+      "made_no_difference": 0.7601007783376487
+    },
+    "nopref": {
+      "caused": 0.07467581694809367,
+      "enabled": 0.07467581694809367,
+      "allowed": 0.05491048577101691,
+      "made_no_difference": 0.7957378803327958
+    },
+    "nocausal": {
+      "caused": 0.27941981227486956,
+      "enabled": 0.27918159977623325,
+      "allowed": 0.2206992944121163,
+      "made_no_difference": 0.2206992935367808
+    },
+    "sem": {
+      "caused": 0.0025000000000000005,
+      "enabled": 0.0025000000000000005,
+      "allowed": 0.0025000000000000005,
+      "made_no_difference": 0.9925
+    },
+    "trials": [
+      {
+        "domain": "physical",
+        "trial_id": "trial_d",
+        "theta": 0.0
+      }
+    ]
+  },
+  "(np.float64(0.9895716669681375), 0.0, np.float64(0.8880584760907666))": {
+    "state": {
+      "necessity": 0.9895716669681375,
+      "acted": 0.0,
+      "aligned": 0.8880584760907666
+    },
+    "full": {
+      "caused": 0.057031681557309685,
+      "enabled": 0.07737018441975349,
+      "allowed": 0.7785620160299902,
+      "made_no_difference": 0.0870361179929466
+    },
+    "nopref": {
+      "caused": 0.06327230205549894,
+      "enabled": 0.06327230205549894,
+      "allowed": 0.6485814842902179,
+      "made_no_difference": 0.22487391159878425
+    },
+    "nocausal": {
+      "caused": 0.06326129694568486,
+      "enabled": 0.08002467852133757,
+      "allowed": 0.4708732531099876,
+      "made_no_difference": 0.38584077142298995
+    },
+    "sem": {
+      "caused": 0.0039266827914555364,
+      "enabled": 0.0039266827914555364,
+      "allowed": 0.9882199509706822,
+      "made_no_difference": 0.003926683446406804
+    },
+    "trials": [
+      {
+        "domain": "physical",
+        "trial_id": "trial_e",
+        "theta": 1.0
+      }
+    ]
+  },
+  "(np.float64(0.0), 0.0, np.float64(0.5000000039012273))": {
+    "state": {
+      "necessity": 0.0,
+      "acted": 0.0,
+      "aligned": 0.5000000039012273
+    },
+    "full": {
+      "caused": 0.07147052432509,
+      "enabled": 0.09695817301217134,
+      "allowed": 0.07147052432509,
+      "made_no_difference": 0.7601007783376487
+    },
+    "nopref": {
+      "caused": 0.07467581694809367,
+      "enabled": 0.07467581694809367,
+      "allowed": 0.05491048577101691,
+      "made_no_difference": 0.7957378803327958
+    },
+    "nocausal": {
+      "caused": 0.06914048375894018,
+      "enabled": 0.0874617697194771,
+      "allowed": 0.4216988740970604,
+      "made_no_difference": 0.42169887242452225
+    },
+    "sem": {
+      "caused": 0.0025000000000000005,
+      "enabled": 0.0025000000000000005,
+      "allowed": 0.0025000000000000005,
+      "made_no_difference": 0.9925
+    },
+    "trials": [
+      {
+        "domain": "physical",
+        "trial_id": "trial_f",
+        "theta": 0.0
+      }
+    ]
+  },
+  "(np.float64(2.0109251791303467e-16), 0.0, np.float64(0.5000000039012273))": {
+    "state": {
+      "necessity": 2.0109251791303467e-16,
+      "acted": 0.0,
+      "aligned": 0.5000000039012273
+    },
+    "full": {
+      "caused": 0.07147052432508992,
+      "enabled": 0.09695817301217123,
+      "allowed": 0.07147052432509118,
+      "made_no_difference": 0.7601007783376478
+    },
+    "nopref": {
+      "caused": 0.07467581694809367,
+      "enabled": 0.07467581694809367,
+      "allowed": 0.05491048577101691,
+      "made_no_difference": 0.7957378803327958
+    },
+    "nocausal": {
+      "caused": 0.0691404837589402,
+      "enabled": 0.0874617697194771,
+      "allowed": 0.4216988740970604,
+      "made_no_difference": 0.4216988724245223
+    },
+    "sem": {
+      "caused": 0.0026196035392896267,
+      "enabled": 0.0026196035392896267,
+      "allowed": 0.057516509864584286,
+      "made_no_difference": 0.9372442830568365
+    },
+    "trials": [
+      {
+        "domain": "physical",
+        "trial_id": "trial_g",
+        "theta": 0.0
+      }
+    ]
+  },
+  "(np.float64(0.9793585884908078), 0.0, np.float64(0.10046550315539582))": {
+    "state": {
+      "necessity": 0.9793585884908078,
+      "acted": 0.0,
+      "aligned": 0.10046550315539582
+    },
+    "full": {
+      "caused": 0.1050075190990292,
+      "enabled": 0.14245505123303484,
+      "allowed": 0.5448005381832098,
+      "made_no_difference": 0.20773689148472613
+    },
+    "nopref": {
+      "caused": 0.06046931652846889,
+      "enabled": 0.06046931652846889,
+      "allowed": 0.5981347179642282,
+      "made_no_difference": 0.28092664897883407
+    },
+    "nocausal": {
+      "caused": 0.08441556699025712,
+      "enabled": 0.10678454184067358,
+      "allowed": 0.29393584221359503,
+      "made_no_difference": 0.5148640489554743
+    },
+    "sem": {
+      "caused": 0.0057314236589486554,
+      "enabled": 0.0057314236589486554,
+      "allowed": 0.8204697971603258,
+      "made_no_difference": 0.1680673555217769
+    },
+    "trials": [
+      {
+        "domain": "physical",
+        "trial_id": "trial_h",
+        "theta": 1.0
+      }
+    ]
+  },
+  "(np.float64(0.9895716669681375), 1.0, np.float64(0.8880584760907666))": {
+    "state": {
+      "necessity": 0.9895716669681375,
+      "acted": 1.0,
+      "aligned": 0.8880584760907666
+    },
+    "full": {
+      "caused": 0.2992821469944362,
+      "enabled": 0.38510894577964927,
+      "allowed": 0.28387434934132943,
+      "made_no_difference": 0.03173455788458496
+    },
+    "nopref": {
+      "caused": 0.33441850625458996,
+      "enabled": 0.33441850625458996,
+      "allowed": 0.24590400721054534,
+      "made_no_difference": 0.08525898028027469
+    },
+    "nocausal": {
+      "caused": 0.2516921683790166,
+      "enabled": 0.3068988071272993,
+      "allowed": 0.24261036631068544,
+      "made_no_difference": 0.19879865818299866
+    },
+    "sem": {
+      "caused": 0.4404573895158152,
+      "enabled": 0.2792165729207234,
+      "allowed": 0.2792165729207234,
+      "made_no_difference": 0.001109464642737991
+    },
+    "trials": [
+      {
+        "domain": "physical",
+        "trial_id": "trial_i",
+        "theta": 1.0
+      }
+    ]
+  },
+  "(np.float64(0.9166666660204662), 0.0, np.float64(0.4583333293924414))": {
+    "state": {
+      "necessity": 0.9166666660204662,
+      "acted": 0.0,
+      "aligned": 0.4583333293924414
+    },
+    "full": {
+      "caused": 0.06353068672576136,
+      "enabled": 0.08618684938031157,
+      "allowed": 0.6247257958792197,
+      "made_no_difference": 0.22555666801470747
+    },
+    "nopref": {
+      "caused": 0.06327230205947143,
+      "enabled": 0.06327230205947143,
+      "allowed": 0.6485814843540898,
+      "made_no_difference": 0.2248739115269673
+    },
+    "nocausal": {
+      "caused": 0.0700004816137464,
+      "enabled": 0.08854965528589216,
+      "allowed": 0.41450572616592174,
+      "made_no_difference": 0.4269441369344398
+    },
+    "sem": {
+      "caused": 0.0035629336192699915,
+      "enabled": 0.0035629336192699915,
+      "allowed": 0.98931119745483,
+      "made_no_difference": 0.003562935306630024
+    },
+    "trials": [
+      {
+        "domain": "physical",
+        "trial_id": "trial_j",
+        "theta": 0.0
+      }
+    ]
+  },
+  "(np.float64(0.9991499459104862), 1.0, np.float64(0.007148513355140371))": {
+    "state": {
+      "necessity": 0.9991499459104862,
+      "acted": 1.0,
+      "aligned": 0.007148513355140371
+    },
+    "full": {
+      "caused": 0.7381204268603555,
+      "enabled": 0.12614282065228996,
+      "allowed": 0.09298332726146995,
+      "made_no_difference": 0.042753425225884566
+    },
+    "nopref": {
+      "caused": 0.3414357429305177,
+      "enabled": 0.3414357429305177,
+      "allowed": 0.25106390890821567,
+      "made_no_difference": 0.06606460523074892
+    },
+    "nocausal": {
+      "caused": 0.4398331606083686,
+      "enabled": 0.11882863021492983,
+      "allowed": 0.09393668803894382,
+      "made_no_difference": 0.34740152113775774
+    },
+    "sem": {
+      "caused": 0.39643496336677636,
+      "enabled": 0.21513653255719475,
+      "allowed": 0.21513653255719475,
+      "made_no_difference": 0.17329197151883408
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_a",
+        "theta": null
+      }
+    ]
+  },
+  "(np.float64(1.5778890218415973e-07), 0.0, np.float64(0.999999994465003))": {
+    "state": {
+      "necessity": 1.5778890218415973e-07,
+      "acted": 0.0,
+      "aligned": 0.999999994465003
+    },
+    "full": {
+      "caused": 0.07147038565897743,
+      "enabled": 0.09695798489527892,
+      "allowed": 0.0714723792519477,
+      "made_no_difference": 0.7600992501937959
+    },
+    "nopref": {
+      "caused": 0.07467581468616898,
+      "enabled": 0.07467581468616898,
+      "allowed": 0.054910515545256125,
+      "made_no_difference": 0.795737855082406
+    },
+    "nocausal": {
+      "caused": 0.062165534686711786,
+      "enabled": 0.07863855419661146,
+      "allowed": 0.48003836902522223,
+      "made_no_difference": 0.3791575420914545
+    },
+    "sem": {
+      "caused": 0.0025537397269263995,
+      "enabled": 0.0025537397269263995,
+      "allowed": 0.13100877220113347,
+      "made_no_difference": 0.8638837483450137
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_b",
+        "theta": null
+      }
+    ]
+  },
+  "(np.float64(0.9756692570302723), 1.0, np.float64(7.337275831879213e-08))": {
+    "state": {
+      "necessity": 0.9756692570302723,
+      "acted": 1.0,
+      "aligned": 7.337275831879213e-08
+    },
+    "full": {
+      "caused": 0.7618845065256271,
+      "enabled": 0.07226973636729497,
+      "allowed": 0.053272001632685494,
+      "made_no_difference": 0.1125737554743923
+    },
+    "nopref": {
+      "caused": 0.3287147035165574,
+      "enabled": 0.3287147035165574,
+      "allowed": 0.24170989736498286,
+      "made_no_difference": 0.10086069560190229
+    },
+    "nocausal": {
+      "caused": 0.48003728721737465,
+      "enabled": 0.07863963623563976,
+      "allowed": 0.062166390062747545,
+      "made_no_difference": 0.3791566864842379
+    },
+    "sem": {
+      "caused": 0.5412413069062068,
+      "enabled": 0.16600021069318793,
+      "allowed": 0.16600021069318793,
+      "made_no_difference": 0.1267582717074175
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_c",
+        "theta": null
+      }
+    ]
+  },
+  "(np.float64(4.053693303815119e-09), 1.0, np.float64(0.9999999980488455))": {
+    "state": {
+      "necessity": 4.053693303815119e-09,
+      "acted": 1.0,
+      "aligned": 0.9999999980488455
+    },
+    "full": {
+      "caused": 0.07147056335367076,
+      "enabled": 0.09695822595903172,
+      "allowed": 0.07147056335367064,
+      "made_no_difference": 0.7601006473336269
+    },
+    "nopref": {
+      "caused": 0.07467582752178101,
+      "enabled": 0.07467582752178101,
+      "allowed": 0.05491049354604141,
+      "made_no_difference": 0.7957378514103967
+    },
+    "nocausal": {
+      "caused": 0.24661917315955098,
+      "enabled": 0.3119698928970471,
+      "allowed": 0.24661917295189567,
+      "made_no_difference": 0.19479176099150622
+    },
+    "sem": {
+      "caused": 0.09763806310704808,
+      "enabled": 0.09327020008779364,
+      "allowed": 0.09327020008779364,
+      "made_no_difference": 0.7158215367173646
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_d",
+        "theta": null
+      }
+    ]
+  },
+  "(np.float64(7.420863003980281e-08), 1.0, np.float64(0.9999999998347934))": {
+    "state": {
+      "necessity": 7.420863003980281e-08,
+      "acted": 1.0,
+      "aligned": 0.9999999998347934
+    },
+    "full": {
+      "caused": 0.07147123879126412,
+      "enabled": 0.09695914226957585,
+      "allowed": 0.07147123879126399,
+      "made_no_difference": 0.760098380147896
+    },
+    "nopref": {
+      "caused": 0.0746759349408116,
+      "enabled": 0.0746759349408116,
+      "allowed": 0.05491057253320745,
+      "made_no_difference": 0.7957375575851694
+    },
+    "nocausal": {
+      "caused": 0.2466191730522417,
+      "enabled": 0.3119698930043161,
+      "allowed": 0.24661917303669423,
+      "made_no_difference": 0.19479176090674813
+    },
+    "sem": {
+      "caused": 0.10879242387074033,
+      "enabled": 0.1051576561605867,
+      "allowed": 0.1051576561605867,
+      "made_no_difference": 0.6808922638080863
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_e",
+        "theta": null
+      }
+    ]
+  },
+  "(np.float64(0.9990456165471805), 1.0, np.float64(4.696541459166834e-05))": {
+    "state": {
+      "necessity": 0.9990456165471805,
+      "acted": 1.0,
+      "aligned": 4.696541459166834e-05
+    },
+    "full": {
+      "caused": 0.8175875747072472,
+      "enabled": 0.07737251544686514,
+      "allowed": 0.05703339982122398,
+      "made_no_difference": 0.048006510024663766
+    },
+    "nopref": {
+      "caused": 0.35395957044590837,
+      "enabled": 0.35395957044590837,
+      "allowed": 0.2602729069572164,
+      "made_no_difference": 0.03180795215096673
+    },
+    "nocausal": {
+      "caused": 0.47947773461190074,
+      "enabled": 0.0791989782283458,
+      "allowed": 0.062608562409436,
+      "made_no_difference": 0.37871472475031737
+    },
+    "sem": {
+      "caused": 0.4377403210744996,
+      "enabled": 0.2310549150100616,
+      "allowed": 0.2310549150100616,
+      "made_no_difference": 0.10014984890537725
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_f",
+        "theta": null
+      }
+    ]
+  },
+  "(np.float64(0.9951969384765242), 1.0, np.float64(2.9485871307076593e-06))": {
+    "state": {
+      "necessity": 0.9951969384765242,
+      "acted": 1.0,
+      "aligned": 2.9485871307076593e-06
+    },
+    "full": {
+      "caused": 0.8029340178110131,
+      "enabled": 0.0755326248948756,
+      "allowed": 0.055677166113778154,
+      "made_no_difference": 0.06585619118033326
+    },
+    "nopref": {
+      "caused": 0.32589569652161704,
+      "enabled": 0.32589569652161704,
+      "allowed": 0.2396370302734629,
+      "made_no_difference": 0.10857157668330292
+    },
+    "nocausal": {
+      "caused": 0.4800000980688558,
+      "enabled": 0.07867681138635153,
+      "allowed": 0.062195777850260515,
+      "made_no_difference": 0.37912731269453226
+    },
+    "sem": {
+      "caused": 0.4377015946077888,
+      "enabled": 0.21885828726879636,
+      "allowed": 0.21885828726879636,
+      "made_no_difference": 0.12458183085461844
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_g",
+        "theta": null
+      }
+    ]
+  },
+  "(np.float64(4.519235309313506e-09), 1.0, np.float64(0.9999999456886879))": {
+    "state": {
+      "necessity": 4.519235309313506e-09,
+      "acted": 1.0,
+      "aligned": 0.9999999456886879
+    },
+    "full": {
+      "caused": 0.07147056783586314,
+      "enabled": 0.0969582320396489,
+      "allowed": 0.07147056783586006,
+      "made_no_difference": 0.7601006322886278
+    },
+    "nopref": {
+      "caused": 0.07467582752986632,
+      "enabled": 0.07467582752986632,
+      "allowed": 0.054910493551986704,
+      "made_no_difference": 0.7957378513882808
+    },
+    "nocausal": {
+      "caused": 0.246619176952844,
+      "enabled": 0.31196988910518186,
+      "allowed": 0.24661916995434147,
+      "made_no_difference": 0.19479176398763265
+    },
+    "sem": {
+      "caused": 0.08309034801086548,
+      "enabled": 0.0541636501781672,
+      "allowed": 0.0541636501781672,
+      "made_no_difference": 0.8085823516328002
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_h",
+        "theta": null
+      }
+    ]
+  },
+  "(np.float64(2.840744811154322e-08), 0.0, np.float64(0.9999999934650328))": {
+    "state": {
+      "necessity": 2.840744811154322e-08,
+      "acted": 0.0,
+      "aligned": 0.9999999934650328
+    },
+    "full": {
+      "caused": 0.0714704993600005,
+      "enabled": 0.0969581391440909,
+      "allowed": 0.07147085828119981,
+      "made_no_difference": 0.7601005032147088
+    },
+    "nopref": {
+      "caused": 0.07467581605474102,
+      "enabled": 0.07467581605474102,
+      "allowed": 0.05491049753042454,
+      "made_no_difference": 0.7957378703600934
+    },
+    "nocausal": {
+      "caused": 0.062165534696879444,
+      "enabled": 0.07863855420947342,
+      "allowed": 0.4800383689401785,
+      "made_no_difference": 0.3791575421534687
+    },
+    "sem": {
+      "caused": 0.0025784043013387377,
+      "enabled": 0.0025784043013387377,
+      "allowed": 0.18998961006788467,
+      "made_no_difference": 0.8048535813294379
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_i",
+        "theta": null
+      }
+    ]
+  },
+  "(np.float64(1.0767513360217144e-07), 1.0, np.float64(0.9999999997403247))": {
+    "state": {
+      "necessity": 1.0767513360217144e-07,
+      "acted": 1.0,
+      "aligned": 0.9999999997403247
+    },
+    "full": {
+      "caused": 0.07147156099496146,
+      "enabled": 0.09695957937679045,
+      "allowed": 0.07147156099496112,
+      "made_no_difference": 0.760097298633287
+    },
+    "nopref": {
+      "caused": 0.0746758480798374,
+      "enabled": 0.0746758480798374,
+      "allowed": 0.054910508662754036,
+      "made_no_difference": 0.7957377951775711
+    },
+    "nocausal": {
+      "caused": 0.24661917305846956,
+      "enabled": 0.3119698929980904,
+      "allowed": 0.24661917303177266,
+      "made_no_difference": 0.1947917609116672
+    },
+    "sem": {
+      "caused": 0.1029631091016715,
+      "enabled": 0.09822306299997996,
+      "allowed": 0.09822306299997996,
+      "made_no_difference": 0.7005907648983686
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_j",
+        "theta": null
+      }
+    ]
+  },
+  "(np.float64(0.9991208348955833), 1.0, np.float64(0.007163769381778894))": {
+    "state": {
+      "necessity": 0.9991208348955833,
+      "acted": 1.0,
+      "aligned": 0.007163769381778894
+    },
+    "full": {
+      "caused": 0.7378845366956229,
+      "enabled": 0.12619165330215654,
+      "allowed": 0.09301932314486709,
+      "made_no_difference": 0.042904486857353576
+    },
+    "nopref": {
+      "caused": 0.34369164140142794,
+      "enabled": 0.34369164140142794,
+      "allowed": 0.2527227120649843,
+      "made_no_difference": 0.059894005132159804
+    },
+    "nocausal": {
+      "caused": 0.4397608995546722,
+      "enabled": 0.11890086406993146,
+      "allowed": 0.09399379051577006,
+      "made_no_difference": 0.3473444458596263
+    },
+    "sem": {
+      "caused": 0.4143643869698235,
+      "enabled": 0.22062559540193066,
+      "allowed": 0.22062559540193066,
+      "made_no_difference": 0.1443844222263152
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_k",
+        "theta": null
+      }
+    ]
+  },
+  "(np.float64(1.0636261400045086e-07), 0.0, np.float64(0.9999999969953977))": {
+    "state": {
+      "necessity": 1.0636261400045086e-07,
+      "acted": 0.0,
+      "aligned": 0.9999999969953977
+    },
+    "full": {
+      "caused": 0.07147043085219809,
+      "enabled": 0.09695804620519866,
+      "allowed": 0.07147177470519694,
+      "made_no_difference": 0.7600997482374062
+    },
+    "nopref": {
+      "caused": 0.07467581488536365,
+      "enabled": 0.07467581488536365,
+      "allowed": 0.05491051292320987,
+      "made_no_difference": 0.7957378573060627
+    },
+    "nocausal": {
+      "caused": 0.0621655346453318,
+      "enabled": 0.07863855414426636,
+      "allowed": 0.4800383693713303,
+      "made_no_difference": 0.37915754183907135
+    },
+    "sem": {
+      "caused": 0.0025162322357600224,
+      "enabled": 0.0025162322357600224,
+      "allowed": 0.08068489702887813,
+      "made_no_difference": 0.9142826384996019
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_l",
+        "theta": null
+      }
+    ]
+  },
+  "(np.float64(0.9879857698721832), 1.0, np.float64(4.7378723923286486e-06))": {
+    "state": {
+      "necessity": 0.9879857698721832,
+      "acted": 1.0,
+      "aligned": 4.7378723923286486e-06
+    },
+    "full": {
+      "caused": 0.7838714273133317,
+      "enabled": 0.07400137974021331,
+      "allowed": 0.05454844338031421,
+      "made_no_difference": 0.08757874956614081
+    },
+    "nopref": {
+      "caused": 0.3254386881643885,
+      "enabled": 0.3254386881643885,
+      "allowed": 0.2393009837202089,
+      "made_no_difference": 0.10982163995101417
+    },
+    "nocausal": {
+      "caused": 0.47997677263205246,
+      "enabled": 0.07870012804357847,
+      "allowed": 0.06221421018893239,
+      "made_no_difference": 0.37910888913543667
+    },
+    "sem": {
+      "caused": 0.4741567632200738,
+      "enabled": 0.19396603623306188,
+      "allowed": 0.19396603623306188,
+      "made_no_difference": 0.13791116431380238
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_m",
+        "theta": null
+      }
+    ]
+  },
+  "(np.float64(8.571029122597536e-09), 0.0, np.float64(0.9999999959954166))": {
+    "state": {
+      "necessity": 8.571029122597536e-09,
+      "acted": 0.0,
+      "aligned": 0.9999999959954166
+    },
+    "full": {
+      "caused": 0.07147051679266266,
+      "enabled": 0.09695816279354759,
+      "allowed": 0.07147062508579358,
+      "made_no_difference": 0.7601006953279962
+    },
+    "nopref": {
+      "caused": 0.07467581622934591,
+      "enabled": 0.07467581622934591,
+      "allowed": 0.054910495232060284,
+      "made_no_difference": 0.7957378723092479
+    },
+    "nocausal": {
+      "caused": 0.06216553465549962,
+      "enabled": 0.07863855415712849,
+      "allowed": 0.48003836928628546,
+      "made_no_difference": 0.37915754190108647
+    },
+    "sem": {
+      "caused": 0.002520473022392017,
+      "enabled": 0.002520473022392017,
+      "allowed": 0.10111125435618258,
+      "made_no_difference": 0.8938477995990334
+    },
+    "trials": [
+      {
+        "domain": "preference",
+        "trial_id": "trial_n",
+        "theta": null
+      }
+    ]
+  },
+  "(0.7499773010656487, 1.0, 0.9999546021312976)": {
+    "state": {
+      "necessity": 0.7499773010656487,
+      "acted": 1.0,
+      "aligned": 0.9999546021312976
+    },
+    "full": {
+      "caused": 0.2625822978840276,
+      "enabled": 0.3562165781657384,
+      "allowed": 0.26257699401574747,
+      "made_no_difference": 0.11862412993448658
+    },
+    "nopref": {
+      "caused": 0.3137980985098297,
+      "enabled": 0.3137980985098297,
+      "allowed": 0.23074144652710132,
+      "made_no_difference": 0.1416623564532393
+    },
+    "nocausal": {
+      "caused": 0.24690905704405414,
+      "enabled": 0.31168011812337054,
+      "allowed": 0.24639009951675486,
+      "made_no_difference": 0.1950207253158205
+    },
+    "sem": {
+      "caused": 0.3117909642234401,
+      "enabled": 0.2729001967325172,
+      "allowed": 0.2729001967325172,
+      "made_no_difference": 0.1424086423115255
+    },
+    "trials": [
+      {
+        "domain": "belief",
+        "trial_id": "trial_a",
+        "theta": null
+      }
+    ]
+  },
+  "(0.7499773010656487, 1.0, 4.5397868702390376e-05)": {
+    "state": {
+      "necessity": 0.7499773010656487,
+      "acted": 1.0,
+      "aligned": 4.5397868702390376e-05
+    },
+    "full": {
+      "caused": 0.6104571422622901,
+      "enabled": 0.06548906780563102,
+      "allowed": 0.0482737851613836,
+      "made_no_difference": 0.2757800047706953
+    },
+    "nopref": {
+      "caused": 0.3137980985098297,
+      "enabled": 0.3137980985098297,
+      "allowed": 0.23074144652710132,
+      "made_no_difference": 0.1416623564532393
+    },
+    "nocausal": {
+      "caused": 0.4470121248575387,
+      "enabled": 0.11165236809155847,
+      "allowed": 0.08826369243889756,
+      "made_no_difference": 0.3530718146120052
+    },
+    "sem": {
+      "caused": 0.5835901837019448,
+      "enabled": 0.0749292599365774,
+      "allowed": 0.0749292599365774,
+      "made_no_difference": 0.26655129642490044
+    },
+    "trials": [
+      {
+        "domain": "belief",
+        "trial_id": "trial_b",
+        "theta": null
+      }
+    ]
+  },
+  "(0.9999546021312976, 1.0, 4.5397868702390376e-05)": {
+    "state": {
+      "necessity": 0.9999546021312976,
+      "acted": 1.0,
+      "aligned": 4.5397868702390376e-05
+    },
+    "full": {
+      "caused": 0.8226685795893001,
+      "enabled": 0.07780123695066543,
+      "allowed": 0.05734942218132149,
+      "made_no_difference": 0.04218076127871311
+    },
+    "nopref": {
+      "caused": 0.3589205443976701,
+      "enabled": 0.3589205443976701,
+      "allowed": 0.2639208012919774,
+      "made_no_difference": 0.01823810991268242
+    },
+    "nocausal": {
+      "caused": 0.4470121248575387,
+      "enabled": 0.11165236809155847,
+      "allowed": 0.08826369243889756,
+      "made_no_difference": 0.3530718146120052
+    },
+    "sem": {
+      "caused": 0.7137792759026402,
+      "enabled": 0.09115651667638118,
+      "allowed": 0.09115651667638118,
+      "made_no_difference": 0.10390769074459752
+    },
+    "trials": [
+      {
+        "domain": "belief",
+        "trial_id": "trial_c",
+        "theta": null
+      }
+    ]
+  },
+  "(0.9999546021312976, 1.0, 0.9999546021312976)": {
+    "state": {
+      "necessity": 0.9999546021312976,
+      "acted": 1.0,
+      "aligned": 0.9999546021312976
+    },
+    "full": {
+      "caused": 0.2934407417506643,
+      "enabled": 0.3980788346753384,
+      "allowed": 0.2934348095997617,
+      "made_no_difference": 0.01504561397423554
+    },
+    "nopref": {
+      "caused": 0.3589205443976701,
+      "enabled": 0.3589205443976701,
+      "allowed": 0.2639208012919774,
+      "made_no_difference": 0.01823810991268242
+    },
+    "nocausal": {
+      "caused": 0.24690905704405414,
+      "enabled": 0.31168011812337054,
+      "allowed": 0.24639009951675486,
+      "made_no_difference": 0.1950207253158205
+    },
+    "sem": {
+      "caused": 0.34531444484630763,
+      "enabled": 0.3022083783612358,
+      "allowed": 0.3022083783612358,
+      "made_no_difference": 0.05026879843122073
+    },
+    "trials": [
+      {
+        "domain": "belief",
+        "trial_id": "trial_d",
+        "theta": null
+      }
+    ]
+  },
+  "(0.5, 1.0, 0.9999546021312976)": {
+    "state": {
+      "necessity": 0.5,
+      "acted": 1.0,
+      "aligned": 0.9999546021312976
+    },
+    "full": {
+      "caused": 0.24437483365363796,
+      "enabled": 0.33151652141282084,
+      "allowed": 0.2443699058235134,
+      "made_no_difference": 0.17973873911002786
+    },
+    "nopref": {
+      "caused": 0.28813159794349524,
+      "enabled": 0.28813159794349524,
+      "allowed": 0.21186840205650473,
+      "made_no_difference": 0.21186840205650473
+    },
+    "nocausal": {
+      "caused": 0.24690905704405414,
+      "enabled": 0.31168011812337054,
+      "allowed": 0.24639009951675486,
+      "made_no_difference": 0.1950207253158205
+    },
+    "sem": {
+      "caused": 0.26660447079808886,
+      "enabled": 0.23339552920191114,
+      "allowed": 0.23339552920191114,
+      "made_no_difference": 0.26660447079808886
+    },
+    "trials": [
+      {
+        "domain": "belief",
+        "trial_id": "trial_e",
+        "theta": null
+      }
+    ]
+  },
+  "(0.5, 1.0, 4.5397868702390376e-05)": {
+    "state": {
+      "necessity": 0.5,
+      "acted": 1.0,
+      "aligned": 4.5397868702390376e-05
+    },
+    "full": {
+      "caused": 0.5106661003620718,
+      "enabled": 0.0654740647980285,
+      "allowed": 0.04826272603365364,
+      "made_no_difference": 0.375597108806246
+    },
+    "nopref": {
+      "caused": 0.28813159794349524,
+      "enabled": 0.28813159794349524,
+      "allowed": 0.21186840205650473,
+      "made_no_difference": 0.21186840205650473
+    },
+    "nocausal": {
+      "caused": 0.4470121248575387,
+      "enabled": 0.11165236809155847,
+      "allowed": 0.08826369243889756,
+      "made_no_difference": 0.3530718146120052
+    },
+    "sem": {
+      "caused": 0.44263937723261265,
+      "enabled": 0.05736062276738731,
+      "allowed": 0.05736062276738731,
+      "made_no_difference": 0.44263937723261265
+    },
+    "trials": [
+      {
+        "domain": "belief",
+        "trial_id": "trial_f",
+        "theta": null
+      }
+    ]
+  },
+  "(0.5, 0.0, 0.9999546021312976)": {
+    "state": {
+      "necessity": 0.5,
+      "acted": 0.0,
+      "aligned": 0.9999546021312976
+    },
+    "full": {
+      "caused": 0.04809261064920996,
+      "enabled": 0.06524328326910202,
+      "allowed": 0.5108927315882116,
+      "made_no_difference": 0.3757713744934766
+    },
+    "nopref": {
+      "caused": 0.05664605880684912,
+      "enabled": 0.05664605880684912,
+      "allowed": 0.44335394119315086,
+      "made_no_difference": 0.44335394119315086
+    },
+    "nocausal": {
+      "caused": 0.06222832001958818,
+      "enabled": 0.07871797678707147,
+      "allowed": 0.4795132233114724,
+      "made_no_difference": 0.379540479881868
+    },
+    "sem": {
+      "caused": 0.002665159636673701,
+      "enabled": 0.002665159636673701,
+      "allowed": 0.4643029130285862,
+      "made_no_difference": 0.5303667676980665
+    },
+    "trials": [
+      {
+        "domain": "belief",
+        "trial_id": "trial_g",
+        "theta": null
+      },
+      {
+        "domain": "belief",
+        "trial_id": "trial_k",
+        "theta": null
+      }
+    ]
+  },
+  "(0.5, 0.0, 4.5397868702390376e-05)": {
+    "state": {
+      "necessity": 0.5,
+      "acted": 0.0,
+      "aligned": 4.5397868702390376e-05
+    },
+    "full": {
+      "caused": 0.08949254180470782,
+      "enabled": 0.1214071595743664,
+      "allowed": 0.08985076762416319,
+      "made_no_difference": 0.6992495309967626
+    },
+    "nopref": {
+      "caused": 0.05664605880684912,
+      "enabled": 0.05664605880684912,
+      "allowed": 0.44335394119315086,
+      "made_no_difference": 0.44335394119315086
+    },
+    "nocausal": {
+      "caused": 0.10112386277607296,
+      "enabled": 0.12792030831171705,
+      "allowed": 0.15418521075222294,
+      "made_no_difference": 0.6167706181599871
+    },
+    "sem": {
+      "caused": 0.004409405270620157,
+      "enabled": 0.004409405270620157,
+      "allowed": 0.11370954060534834,
+      "made_no_difference": 0.8774716488534113
+    },
+    "trials": [
+      {
+        "domain": "belief",
+        "trial_id": "trial_h",
+        "theta": null
+      },
+      {
+        "domain": "belief",
+        "trial_id": "trial_l",
+        "theta": null
+      }
+    ]
+  },
+  "(4.5397868702390376e-05, 1.0, 0.9999546021312976)": {
+    "state": {
+      "necessity": 4.5397868702390376e-05,
+      "acted": 1.0,
+      "aligned": 0.9999546021312976
+    },
+    "full": {
+      "caused": 0.07190464088803045,
+      "enabled": 0.09754706827991547,
+      "allowed": 0.0719046151526157,
+      "made_no_difference": 0.7586436756794384
+    },
+    "nopref": {
+      "caused": 0.07476081502744696,
+      "enabled": 0.07476081502744696,
+      "allowed": 0.05497298640398804,
+      "made_no_difference": 0.795505383541118
+    },
+    "nocausal": {
+      "caused": 0.24690905704405414,
+      "enabled": 0.31168011812337054,
+      "allowed": 0.24639009951675486,
+      "made_no_difference": 0.1950207253158205
+    },
+    "sem": {
+      "caused": 0.10390769074459752,
+      "enabled": 0.09115651667638118,
+      "allowed": 0.09115651667638118,
+      "made_no_difference": 0.7137792759026402
+    },
+    "trials": [
+      {
+        "domain": "belief",
+        "trial_id": "trial_i",
+        "theta": null
+      },
+      {
+        "domain": "belief",
+        "trial_id": "trial_n",
+        "theta": null
+      }
+    ]
+  },
+  "(4.5397868702390376e-05, 1.0, 4.5397868702390376e-05)": {
+    "state": {
+      "necessity": 4.5397868702390376e-05,
+      "acted": 1.0,
+      "aligned": 4.5397868702390376e-05
+    },
+    "full": {
+      "caused": 0.07200129556074164,
+      "enabled": 0.0969043817923942,
+      "allowed": 0.07143087334403166,
+      "made_no_difference": 0.7596634493028325
+    },
+    "nopref": {
+      "caused": 0.07476081502744696,
+      "enabled": 0.07476081502744696,
+      "allowed": 0.05497298640398804,
+      "made_no_difference": 0.795505383541118
+    },
+    "nocausal": {
+      "caused": 0.4470121248575387,
+      "enabled": 0.11165236809155847,
+      "allowed": 0.08826369243889756,
+      "made_no_difference": 0.3530718146120052
+    },
+    "sem": {
+      "caused": 0.1226341318248559,
+      "enabled": 0.01747396876637071,
+      "allowed": 0.01747396876637071,
+      "made_no_difference": 0.8424179306424026
+    },
+    "trials": [
+      {
+        "domain": "belief",
+        "trial_id": "trial_j",
+        "theta": null
+      },
+      {
+        "domain": "belief",
+        "trial_id": "trial_m",
+        "theta": null
+      }
+    ]
+  }
+}

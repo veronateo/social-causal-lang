@@ -1,6 +1,6 @@
 import numpy as np
 from typing import Dict, Any, Optional, Literal
-from .base import Domain, DomainState
+from .base import Domain, WorldState
 from .physical_inference import PreferenceInference
 from .physical_shared import FarmerGridWorld, rewards_from_theta
 from ..config import ModelConfig
@@ -39,7 +39,6 @@ class PhysicalDomain(Domain):
             step_cost = config.step_cost
             temperature = config.temperature
             alignment_mode = config.alignment_mode
-            scale = config.reward_scale
         
         self.env = FarmerGridWorld()
         self.step_cost = step_cost
@@ -232,27 +231,20 @@ class PhysicalDomain(Domain):
 
 
         
-    def get_domain_state(self, trial_data: Dict[str, Any], theta: Optional[float] = None) -> DomainState:
+    def get_domain_state(self, trial_data: Dict[str, Any], theta: Optional[float] = None) -> WorldState:
         actual_outcome = trial_data['final_outcome']
         
-        # Posterior
+        # Posterior over farmer preferences
         if theta is not None:
             posterior = {theta: 1.0}
         else:
             posterior = self.inference.infer_preference_distribution(trial_data)
-            
-        # Changed: Observable Change in Direction
-        # Infer direction from outcome (Apple=Right, Banana=Left)
-        final_direction = 'right' if actual_outcome == 'apple' else 'left'
+        
+        # Expected outcome based on initial direction (for logging)
         initial_direction = trial_data['farmer_initial_direction']
-        
-        changed = 1.0 if initial_direction != final_direction else 0.0
-        
-        # Define expected outcome based on initial direction (for logging)
-        # Assuming Right=Apple, Left=Banana
         expected_outcome = 'apple' if initial_direction == 'right' else 'banana'
         
-        # Aligned
+        # V — Value alignment: does outcome match farmer's preference?
         if self.alignment_mode == 'hard':
             aligned = sum(
                 prob for t, prob in posterior.items()
@@ -264,28 +256,22 @@ class PhysicalDomain(Domain):
                 for t, prob in posterior.items()
             )
         
-        # Wizard acted
+        # A — Wizard acted?
         wizard_action = trial_data['wizard_action']
-        if 'nothing' in str(wizard_action).lower():
-            wizard_acted = 0.0
-        else:
-            wizard_acted = 1.0
+        acted = 0.0 if 'nothing' in str(wizard_action).lower() else 1.0
         
-        # Compute Necessity
+        # C — Counterfactual necessity (avg over alternative actions)
         nec_stats = self.compute_necessity(trial_data, posterior)
         
         preferred_outcome = 'probabilistic' if theta is None else self._get_preferred_outcome(theta)
 
-        return DomainState(
-            changed=changed,
+        return WorldState(
+            necessity=nec_stats['avg'],
+            acted=acted,
             aligned=aligned,
-            wizard_acted=wizard_acted,
             actual_outcome=actual_outcome,
             expected_outcome=expected_outcome,
             preferred_outcome=preferred_outcome,
-            necessity_control=nec_stats['control'],
-            necessity_max=nec_stats['max'],
-            necessity_avg=nec_stats['avg'],
             debug_necessity_info=nec_stats.get('debug_info'),
             debug_posterior=posterior
         )

@@ -1,0 +1,610 @@
+%%%
+%%% Annual Cognitive Science Conference
+%%% Sample LaTeX Paper -- Proceedings Format
+%%%
+
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage{cogsci}
+
+% \cogscifinalcopy %%% Uncomment this line for the final submission
+
+%%% Bibliography %%%
+\usepackage[
+  style=apa,
+  natbib=true,
+  annotation=false,
+  doi=false,
+  url=false
+]{biblatex}
+\addbibresource{references.bib}
+\addbibresource{TobisPapers.bib}
+\setlength{\bibhang}{.125in}
+
+\usepackage{float} 
+% \usepackage[none]{hyphenat} %%% Uncomment to turn off hyphenation
+\usepackage{enumerate}
+\usepackage{graphicx} 
+\usepackage{microtype}
+\usepackage{subfigure}
+\usepackage{booktabs}
+\usepackage{xspace}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{stmaryrd}
+\usepackage{titlesec}
+\usepackage{hyperref, relsize}
+\usepackage{color, soul}
+
+\definecolor{lightblue}{RGB}{70,120,230}
+
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    % citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    % urlcolor=lightblue
+    urlcolor=black
+}
+
+\setlist[enumerate, 1]{% global settings for the first level in enumerate environments
+  leftmargin = 0.7cm, % item text indentation
+  align = left,
+  labelwidth=\parindent,
+  labelsep = 5pt
+}
+
+\titleformat{\paragraph}[runin]
+  {\normalfont\normalsize\bfseries\itshape}  % bold + italic
+  {\theparagraph}                             % label
+  {0em}                                       % space between label and title
+  {}  
+\titlespacing{\paragraph}{0pt}{0.25ex plus 1ex minus .2ex}{0.5em}
+
+\title{Causal language about social interactions}
+
+%%% Format authors using helper functions from authblk package %%%
+\author[1]{\mbox{Verona Teo (veronateo@stanford.edu)}}
+\author[2]{\mbox{Claire Augusta Bergey (cbergey@stanford.edu)}}
+\author[1]{\mbox{Tobias Gerstenberg (gerstenberg@stanford.edu)}}
+\affil[1]{Department of Psychology, Stanford University}
+\affil[2]{Department of Linguistics, Stanford University}
+
+%%% Or, format authors manually %%%
+% \author{
+%   {\large\bfseries Author N. One (a1@uni.edu)$^1$ \& Author Number Two$^2$} \\
+%   {\normalsize\normalfont
+%     $^1$Department of Hypothetical Sciences, University of Illustrations \\
+%     $^2$Department of Example Studies, University of Demonstrations
+%   }
+% }
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+Causal language is central to our understanding of social interactions: whether someone ``caused'' or ``allowed'' another's action shifts our impression of what happened.
+Yet models of causal language use have largely focused on physical events (e.g., ball collisions), ignoring the beliefs and preferences implicated in human action.
+We present a computational framework and three experiments investigating how people use causal expressions (``caused,'' ``enabled,'' ``allowed,'' ``made no difference'') across physical, epistemic, and preference-based interventions between agents. 
+We find that people prefer different causal expressions across these intervention types: they describe removing a physical obstacle as a different form of facilitation than providing information.
+We capture people's language use with a model that selects utterances based on counterfactual simulations of events, inferences about agents' mental states, and the utterances' informativity. 
+This model explains human judgments better than semantic-only and non-mentalizing baselines, highlighting that people reason about informativity and mental states to describe how people affect each other. 
+
+
+\textbf{Keywords:}
+causal language; semantics; pragmatics; counterfactual simulation; social cognition
+\end{abstract}
+
+
+\section{Introduction}
+
+% possible structure for the intro: 
+% - the words we use matter: an example contrasting "caused" vs. "enabled"/"allowed" 
+% - psychological theories have proposed different theoretical frameworks for how we distinguis these expressions (see Fig 1 in Ari's paper)
+% - also briefly mention prior work in linguistics and philosophy (ari's paper has relevant references)
+% - then briefly describe Ari's paper: a generative model of capturing people's causal knowledge (the counterfactual simulation model); a semantics defined in terms of the different aspects of causation; a pragmatics using the RSA 
+% - mention that the model has primarly been tested for dynamic physical interactions (although see Exp 1 in the paper) 
+% - then mention the Cao paper which has proposed semantics of the causal expressions in the context of agents interacting with one another (saying that this account focused on the literal semantics) 
+% - then introducing our key contribution: combining a generative causal model of agents interacting with one another (that includes an inference about mental states using Bayesian inverse planning, and uses counterfactual simulation to determine causal attribution, and uses RSA ...)
+% - then introduce the task and the model 
+
+
+% TODO: Add specific political example from presentation, or make examples better
+
+
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/scl-overview.pdf}
+    \caption{\textbf{Overview of the three experiments}. \textbf{(A)} In an example scenario from the \emph{physical} experiment, the farmer initially goes towards the apple before the wizard decides to block it with the rock. The farmer then gets the banana. 
+    \textbf{(B)} In the \emph{belief} scenario, the farmer has an initial guess that the gold is on the right; the wizard reinforces that belief by showing a sign post indicating that the gold is to the right; the farmer continues going to the right and gets the gold chest. \textbf{(C)} In the \emph{preference} scenario, the farmer initially goes towards the left basket with two bananas. The wizard adds an apple to the left basket, and the farmer decides to get the left basket.
+    \textbf{(D)} In each experiment, participants choose one of four utterances that best describes a given scenario.}
+    
+    % {\textbf{(B)} Proportions of selected causal expressions for each example scenario. X-axis labels (from left to right): ``caused,'' ``enabled,'' ``allowed,'' and ``made no difference.'' Error bars indicate 95\% bootstrapped confidence invervals.}
+    \label{fig:overview}
+\end{figure*}
+
+
+Causal language shapes how we attribute responsibility and assign blame. 
+% When we describe what happened, the words we choose carry important implications for how we judge agents' roles, intentions, and culpability. 
+% Consider the distinction between saying a policy \textit{caused} unemployment to rise versus saying it \textit{prevented} unemployment from falling further.
+Consider the distinction between saying that an action ``caused'' harm versus saying that it ``allowed'' it.
+Although both utterances may in fact describe the same causal relationship, they highlight different aspects of the causal structure, evoking different mental representations of what happened and how it came about. Philosophers \citep{mcdermott1995redundant,foot1967problem, mcgrath2003causation, mcmahan1993killing, Thomson1976-THOKLD-2}, linguists \citep{baglini2021modelling,wolff2003direct,nadathur2020causal,talmy1988force}, and psychologists \citep{goldvarg2001naive,sloman2009causal,wolff2007representing} have been deeply interested in the meaning of causal expressions, how people use, and understand them. 
+% Such distinctions matter in high-stakes contexts.
+% For example, in legal proceedings, whether an action \textit{caused} harm or merely \textit{allowed} it can determine liability \citep{woollard_doing_2025}.
+% Understanding how people use various causal expressions and what those choices reveal about their representations of agency, intention, and causation is central to theories of language, social cognition, and moral reasoning.
+
+Pragmatic theories of language use posit that language users consider not just \textit{semantics}, the literal meaning of words, but also \textit{pragmatics}, inferences about an utterance's informativity in context \citep{grice1975logic}. 
+That is, speakers will prefer not only true but also informative expressions. For example, when ball~A collides with ball~B and B ricochets, it is both true that A \emph{affected} B's motion but also that it \emph{caused} B's motion. Given that ``caused'' is more specific than ``affected'', a speaker will likely prefer to say the more informative ``caused.''
+Recent work has applied this theory to causal language, enumerating semantic meanings of causal terms and modeling people as pragmatically reasoning over them.
+\citet{beller2025language} developed a model in the Rational Speech Acts (RSA) framework \citep{frank_predicting_2012,degen2023rational} which models speakers as considering alternative potential event outcomes (counterfactual simulations of what happened) and alternative potential utterances (pragmatic reasoning about informativity). 
+They found that people choose causal language that is most informative to a listener against the backdrop of those alternatives. 
+This work focused on physical causation, such as scenarios involving billiard balls, colliding objects, and direct physical contact. 
+% which do not capture the rich social factors and mental states that drive causal attributions in real-world social interactions.
+
+Recent work has begun to extend causal language modeling to social domains. 
+\citet{cao_semantics_2023} developed a formal semantics for causal verbs using structural causal models, showing how expressions like ``caused,'' ``enabled,'' and ``prevented'' map onto distinct patterns of counterfactual dependence. 
+% Their framework can model events involving agents' mental states, not just physical objects. 
+However, this work still focuses primarily on situations where an agent intervenes directly on the physical environment (e.g., one agent places or removes obstacles that affect what another agent is able to do). Further, this work focused on the semantics of different expressions (whether people think an expression is true for a given situation), and not on the pragmatics (which expression people would think best described what happened). 
+
+% was interested in how people determine whether a given expression is 
+
+% and adopts a semantics-only approach without considering pragmatic reasoning. 
+
+Causal language about social interactions needs to consider the agents' mental states.  
+% A gap remains in our understanding of how people track and reason about latent factors—such as people's mental states—when selecting causal language. 
+% In addition to perceptual observations, agents' desires, beliefs, and intentions also matter for causal attribution in social contexts.
+For instance, one person can influence another not just by intervening on the physical environment, but also by altering their beliefs (e.g., by providing important information) or preferences (e.g., by making some options more or less attractive).
+Such influence can be exercised intentionally, raising questions about how causal language reflects not only what changed, but also the intervener's knowledge and goals.
+How do people integrate these factors when choosing how to describe what happened? 
+% Moreover, how might people engage in counterfactual reasoning about what would have happened—considering what the affected agent's outcome could have been had the intervener's actions been different?
+
+In this paper, we investigate how people use causal language across three types of agent interventions: physical (affecting what outcomes are physically accessible), epistemic (affecting what agents believe), and preference (affecting what agents prefer by changing option utilities). 
+We focus on four causal expressions that span different types of causal involvement: ``caused,'' ``enabled,'' ``allowed,'' and ``made no difference.'' 
+% We choose these expressions because they capture several key distinctions that matter for responsibility attribution, such as active versus passive causation.
+We develop a computational model that extends prior work to 
+% integrate the semantics of causal language and pragmatic reasoning over those semantics across all three intervention types. 
+integrate counterfactual simulation, mental state inference, and pragmatic reasoning to predict how people select among these expressions when describing social interactions across the three intervention mechanisms.
+We find that causal language use in social contexts depends not only on changes to the physical causal structure, but also on inferred beliefs and preferences.\footnote{Code and materials available here: \texttt{\url{https://anonymous.4open.science/r/social-causal-lang/}}}
+
+\section{Experimental Design}
+
+We conducted three experiments investigating how people choose causal expressions to describe scenarios involving a farmer and a wizard (\autoref{fig:overview}). 
+The farmer seeks to obtain some outcome, and the wizard has the ability to influence the ultimate outcome by intervening in the environment.
+Across all experiments, participants watched animated scenarios and then selected which of four causal expressions best described what happened (\autoref{fig:overview}D). 
+% ``caused'', ``enabled'', ``allowed'', or ``made no difference''.
+
+% \begin{enumerate}[]
+%     \item ``The wizard \textbf{caused} the farmer to get the [outcome].''
+%     \item ``The wizard \textbf{enabled} the farmer to get the [outcome].''
+%     \item ``The wizard \textbf{allowed} the farmer to get the [outcome].''
+%     \item ``The wizard \textbf{made no difference} to the farmer getting the [outcome].'' 
+% \end{enumerate}
+
+We focus on three distinct types of interventions that span the principal ways an agent can causally influence another's outcomes in social settings. 
+First, in the \textit{physical} domain (Experiment~1), the wizard directly manipulates the environment by adding or removing an obstacle that affects what the farmer can physically access. 
+This provides a baseline for understanding causal language in settings similar to those in prior work examining physical interventions \citep{cao_semantics_2023}. 
+Second, in the \textit{belief} domain (Experiment~2), the wizard intervenes on the farmer's epistemic state by providing information about the world. 
+This allows us to examine whether causal expressions track outcomes differently when causation operates through belief change rather than physical affordances, and introduces questions about knowledge asymmetry and trust. 
+Third, in the \textit{preference} domain (Experiment~3), the wizard influences the farmer's choices by changing the relative desirability of available options. 
+% Unlike the physical and belief domains, 
+Here, the farmer maintains both physical access and accurate knowledge, but the wizard alters which option is more attractive. 
+Together, these three intervention types allow us to investigate how the same causal expressions—``caused,'' ``enabled,'' ``allowed,'' and ``made no difference''—map onto different mechanisms of social influence.
+
+
+\section{Computational Model}
+
+We propose a model that aims to capture the choice of causal expressions using the Rational Speech Act (RSA) framework \citep{GOODMAN2016818}. 
+We first discuss the model's semantics, followed by the pragmatics component.
+
+
+\subsection{Semantics}
+
+% We define a semantics function $\mathcal{V}(u, w)$, 
+% which maps the following three variables to the causal expressions:
+% which maps each of the causal expressions to the following variables:
+
+We hypothesize that the meaning of each causal expression depends on three key features: counterfactual importance ($C$), 
+action ($A$), and value alignment ($V$). 
+We represent worlds in terms of these features:
+
+\begin{itemize}
+    \item \textbf{Counterfactual ($C \in [0,1]$)}: The degree to which the wizard's action was counterfactually necessary for the outcome.
+    Values closer to 1 indicate that the action was more causally important.
+    % This is computed counterfactually: would the outcome have been different if the wizard had acted differently?
+
+    \item \textbf{Action ($A \in \{0, 1\}$)}: Whether the wizard actively intervened (1) in the situation or did nothing (0).
+    \item \textbf{Value ($V \in [0,1]$)}: The degree to which the final outcome aligns with the farmer's preference.
+    Larger values indicate that the wizard's action was more aligned.
+\end{itemize}
+
+% These features are computed from the full scenario 
+% via the causal inference and mental state inference procedures described below.
+% This extends standard RSA semantics to capture the gradedness of causal necessity and value alignment.
+
+
+\subsubsection{Mental State Inference}
+
+We model the farmer as a rational agent planning under uncertainty about potential wizard intervention. The farmer plans actions $a$ to maximize expected utility:
+\begin{equation}
+\label{eq:utility}
+    U(a; \theta) = \mathbb{E}_{o \sim P(o|a)} \left[R(o; \theta) - C(o, a)\right]
+\end{equation}
+where $P(o|a)$ represents the farmer's belief about which outcome $o$ will result from action $a$, $R(o; \theta)$ assigns reward $\theta \in [0,1]$ to one outcome and $1-\theta$ to the alternative, and $C(o, a) = c_{\text{step}} \cdot |\text{path}(a, o)|$ is the path cost, which varies depending on whether the wizard blocks the farmer's intended path. 
+We assume the farmer has uniform beliefs about wizard intervention (i.e., the probability that the wizard acts is 0.5).
+The farmer chooses actions according to a softmax distribution with temperature parameter $\tau$:
+\begin{equation}
+\label{eq:softmax}
+    P(a \mid \theta) \propto \exp\left(\frac{U(a; \theta)}{\tau}\right)
+\end{equation}
+where $\tau$ controls how likely an agent selects the actions with the highest utility. 
+
+We infer the farmer's preference $\theta$ by computing the posterior 
+$P(\theta \mid a_{\text{obs}})$ given their observed actions 
+$a_{\text{obs}}$ via Bayesian inference.
+% based on the farmer's initial movement and their reaction to the wizard's intervention, assuming the farmer selects actions soft-maximally according to their expected utility.
+We then compute the value alignment ($V$) as the expected probability that the actual outcome corresponds to the farmer's preferred outcome, marginalizing over the posterior distribution of $\theta$.
+
+\subsubsection{Causal Inference}
+
+We compute the causal importance ($C$) of the wizard's action via counterfactual simulation.
+Specifically, we compare the actual observed world to the set of alternative worlds in which the wizard acted differently.
+For each alternative action, the model simulates the counterfactual outcome, accounting for the farmer's behavior by marginalizing over the posterior distribution of mental states inferred above. 
+We define $C$ as the probability that the outcome would have been different, averaged across the set of all alternative actions available to the wizard.
+This allows us to capture the causal status of an action relative to the full space of possible interventions.
+
+
+% \subsection{Causal Expressions}
+\subsubsection{Definitions}
+% We define the semantics of each causal expression as combinations of these variables.
+We define a semantic denotation function $\llbracket \cdot \rrbracket$ that maps each utterance $u$ and world state $w$ to a graded value in $[0, 1]$.
+For world states $w = (C, A, V)$, we define the semantic meaning of each causal expression as follows:
+
+\paragraph{``Caused''}
+The wizard \emph{caused} the outcome if their action was counterfactually necessary and they actively intervened. 
+    % \begin{equation}
+    %     \mathcal{V}(\text{caused}, w) = N \cdot S(V; \lambda_{\text{act}})
+    %     \mathcal{V}(\text{caused}, w) = C \cdot A
+    % \end{equation}
+\begin{align}
+    % \llbracket \text{``caused''} \rrbracket &= C \land A
+    \llbracket \text{``caused''} \rrbracket &= C \cdot A
+\end{align}
+
+\paragraph{``Enabled''}
+The wizard \emph{enabled} the outcome if their action was counterfactually necessary, they actively intervened, and the outcome was aligned with that of the farmer's preference.
+    % \begin{equation}
+    %     \mathcal{V}(\text{enabled}, w) = N \cdot V \cdot S(A; \lambda_{\text{align}})
+    %     \mathcal{V}(\text{enabled}, w) = C \cdot A \cdot V
+    % \end{equation}
+
+\begin{align}
+    \llbracket \text{``enabled''} \rrbracket &= C \cdot A \cdot V
+\end{align}
+% Note that we enforce strict action ($V$), as we hypothesize that ``enabling'' typically requires active support.
+
+
+\paragraph{``Allowed''}
+The wizard \emph{allowed} the outcome to occur if their action (or inaction) was counterfactually necessary and the outcome was aligned with the farmer's preference.
+    % \begin{equation}
+    %     % \mathcal{V}(\text{allowed}, w) = N \cdot S(A; \lambda_{\text{align}})
+    %     \mathcal{V}(\text{allowed}, w) = C \cdot V
+    % \end{equation}
+\begin{align}
+    \llbracket \text{``allowed''} \rrbracket &= C \cdot V
+\end{align}
+
+\paragraph{``Made no difference''}
+Finally, we say that the wizard \emph{made no difference} to the outcome if the wizard's action was not causally relevant for the outcome.
+    % \begin{equation}
+    %     \mathcal{V}(\text{made no difference}, w) = 1 - C
+    % \end{equation}
+\begin{align}
+    \llbracket \text{``made no difference''} \rrbracket &= 1 - C
+\end{align}
+
+
+\subsection{Pragmatics}
+
+% \subsubsection{Literal listener}
+% The literal listener $L_0$ updates their belief about the world state $w$ based on the literal meaning of the utterance $u$:
+
+% \subsubsection{Pragmatic speaker}
+% The pragmatic speaker $S_1$ chooses an utterance $u$ to maximize the utility of the utterance, defined as the informativity of the utterance to the listener, minus the cost of producing it:
+% % \begin{equation}
+% %     S_1(u|m) = \ln P_{L_0}(w \mid u) - C(u)
+% % \end{equation}
+
+% % Since the expressions are roughly equal in length and complexity, 
+% We assume a uniform cost $C(u) = 0$ for all utterances.
+% The speaker selects utterances soft-maximally according to their utility:
+
+% where $\alpha$ represents the speaker's rationality. 
+% Higher values of $\alpha$ lead to more greedy selection of the optimal utterance.
+
+
+We model causal expression choice within the RSA framework. 
+We treat the speaker $S_1$ as a rational agent who selects an utterance $u$ to communicate the world state $w$ to a literal listener $L_0$.
+The literal listener $L_0$ interprets utterances by updating their beliefs about the world state $w$ based on the semantic truth value of the utterance $u$:
+\begin{equation}
+    L_0(w \mid u) \propto \llbracket u \rrbracket \cdot P(w)
+\end{equation}
+where $P(w)$ is a uniform prior over world states.
+
+The expected utility of an utterance $u$ is 
+\begin{equation}
+    U(u; w) = \log(L_{0}(w \mid u)) - C(u)
+\end{equation}
+We assume a uniform cost $C(u) = 0$ for all utterances.
+The pragmatic speaker $S_1$ then selects utterances to maximize informativity via softmax:
+\begin{equation}
+    \label{eq:pragmatic_speaker}
+    S_1(u \mid w) \propto \exp(\alpha \cdot U(u; w))
+\end{equation}
+where $\alpha > 0$ is a rationality parameter.
+Higher values of $\alpha$ lead to more greedy selection of the optimal utterance.
+
+The model has 3 free parameters, including the rationality parameter $\alpha$ in the pragmatics module (see \autoref{eq:pragmatic_speaker}), and two inference parameters: the farmer's step cost $c_{\text{step}}$ (see \autoref{eq:utility}) and softmax temperature $\tau$ (see \autoref{eq:softmax}).
+We fitted the model parameters by minimizing the negative log-likelihood of the participants' utterance choices under the model predictions. We found optimal parameter values of $c_{\text{step}}=0.948, \tau=0.193, \alpha=0.446$.
+
+
+
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=0.92\linewidth]{figures/human_model.pdf}
+    \caption{\textbf{Participant selections and model predictions for two example scenarios from each domain}. 
+    % \textit{Note}: 
+    C~$=$~``caused,'' E~$=$~``enabled,'' A~$=$~``allowed,'' and N~$=$~``made no difference.''
+    Error bars indicate 95\% bootstrapped confidence intervals.}
+    \label{fig:model_human}
+\end{figure*}
+
+\subsection{Alternative models}
+% In addition to the model proposed, we also consider a few alternative models. 
+To test which components of our model are necessary for capturing human causal language use, we compare our full model against several ablated alternatives. 
+Each alternative removes a component, allowing us to assess specific hypotheses about what drives people's choice of causal expressions.
+We evaluated each model's performance using $5$-fold cross-validation.
+% maybe also note that each model's parameters were fit in each fold? but probably not necessary
+
+\subsubsection{No Causal Inference}
+This model removes counterfactual simulation, i.e., the variable $C$ from our semantics. 
+% and instead relies only on the observed outcome and features that are directly observable.
+It provides a test of whether people engage in counterfactual reasoning when selecting expressions, or whether simpler heuristics based on observable features suffice.
+% If causal language truly reflects causal understanding, this ablation should perform worse than the full model.
+
+\subsubsection{No Mental State Inference}
+
+This model does not infer the farmer's beliefs or preferences, ignoring the variable $V$.
+% , treating these as directly observable rather than as hidden states that must be inferred.
+This tests whether mental state reasoning like inferring the farmer's underlying preference is necessary for choosing causal expressions in such social contexts.
+% If people do in fact consider mental states, then we'd expect this model to perform worse as well.
+
+\subsubsection{No Pragmatics}
+
+To assess the contribution of pragmatic reasoning, we also compare against a model that uses only the literal semantics of the causal language.
+% It directly predicts expression choice based on the literal truth conditions, without considering what would be informative to communicate.
+This model assumes a speaker who chooses utterances proportional to their literal truth values, without considering informativity.
+\begin{align}
+    {S_0}(u \mid w) \propto \llbracket u \rrbracket
+\end{align}
+This tests whether pragmatic inference plays a role in causal language selection, or whether people simply choose expressions based on their literal meanings.
+% (which we hypothesize depends on both causal reasoning and mental state inference).
+
+\section{Experiments}
+
+\subsection{Methods}
+
+\subsubsection{Participants}
+
+We recruited $100$ participants for each experiment via Prolific, for a total of $N=300$ participants (\emph{age}: mean $=44$, SD $=13$; \emph{gender}: 166 female, 131 male, 3 undisclosed; \emph{race}: 222 white, 29 Black, 20 Asian, 16 mixed, 10 other). 
+We included participants who were fluent in English, based in the United States, had an approval rate of at least 97\%, and had completed at least 100 previous studies.
+% The experiments took an average of X minutes to complete.
+Participants were compensated at a rate of \$12 per hour.
+
+
+\subsubsection{Stimuli}
+
+All stimuli were animated scenarios showing a farmer and a wizard (see \autoref{fig:overview}). 
+In each scenario, the farmer started at the center of a horizontal lane, and could move left or right to reach one of two goal states. A wizard was positioned underneath.
+Each trial began by revealing the farmer's initial state (e.g., steps towards one outcome, beliefs about the options indicated by thought bubbles), followed by the wizard's intervention, and concluded with the farmer's action and ultimate outcome.
+Across all three experiments, we removed from the set of all possible trials those which would have suggested that the farmer was irrational (e.g., moving towards one option, then switching to the other even if the wizard did nothing).
+% We had $38$ trials across all three experiments.
+This gave us $38$ trials in total (\textit{physical}: 10 trials, \textit{belief}: 14 trials, \textit{preference}: 14 trials). 
+
+\paragraph{Physical}
+
+In this domain, the farmer navigated toward one of two fruit baskets (banana on the left, apple on the right; see \autoref{fig:overview}A). 
+A bolded tile in front of the apple marked where the wizard could place or remove a rock.
+The farmer took initial steps toward one of the fruits.
+After observing the farmer's initial movement, the wizard then either placed a rock blocking the apple, removed an existing rock in front of the apple, or did nothing.
+The farmer continued moving, depending on which path was available, and ultimately reached either the apple or the banana.
+Across 10 trials, we systematically varied the farmer's initial direction, whether a rock was initially present, the wizard's action, and the final outcome.
+
+
+\paragraph{Belief}
+
+Here, closed treasure chests sat on both sides of the lane, with one containing gold and the other rocks (see \autoref{fig:overview}B). 
+The farmer could not see what was inside until he opened one of the chests.
+Thought bubbles displayed the farmer's initial belief about the gold's location; the farmer could either have no belief, a true belief, or a false belief.
+After the farmer's belief was displayed, the wizard could show a sign pointing correctly to the gold, a false sign pointing to the rocks, or do nothing.
+The farmer could then either follow the sign, ignore it, or (if the wizard didn't show a sign) make a guess, before ultimately obtaining either gold or rocks.
+We manipulated the farmer's initial belief state, the wizard's action, the farmer's subsequent response, and the outcome across 14 trials.
+
+
+\paragraph{Preference}
+
+In these scenarios, there were two fruit baskets on each side of the lane, with one initially containing bananas (left) and the other apples (right; see \autoref{fig:overview}C).
+After the farmer took initial steps toward one basket, the wizard could add an apple to the left basket, add an apple to the right basket, or do nothing.
+The farmer then either continued toward his initial choice or switched baskets.
+The 14 trials varied the farmer's initial direction, the wizard's action, whether the farmer switched directions, and which basket the farmer ultimately obtained.
+
+
+\subsubsection{Procedure}
+
+All experiments followed the same general procedure. 
+Participants first read instructions explaining the experimental setup and the farmer's goal. 
+They viewed demonstration animations showing each of the wizard's possible actions. 
+After reading the instructions, participants completed a comprehension check before proceeding to the main trials.
+
+% The main experiment consisted of either 10 trials (Experiment~1) or 14 trials (Experiments~2 and 3), presented in random order. 
+% For each trial, participants watched an animation and then selected which of the four causal expressions best described what happened.
+
+
+
+
+
+% \subsubsection{Regression model} 
+
+% TODO: a model that's qualitatively different from ours
+
+
+
+
+
+\subsection{Results}
+
+We first discuss behavioral results and then compare each of the different models. 
+
+\begin{table}[b]
+    \caption{Model performance comparison on $5$-fold cross validation. We randomly split the $38$ trials into 5 folds, fitting parameters on training folds and evaluating on the held-out test fold. Values represent means $\pm$ standard error for each metric are averaged on the test trials. $\downarrow$ means lower values are better. 
+    % \textit{Note}: 
+    NLL $=$ negative log-likelihood, RMSE $=$ root mean squared error, r $=$ Pearson correlation.}
+    \label{tab:model_comparison}
+    \centering
+    \resizebox{\columnwidth}{!}{
+    \begin{tabular}{lcccc}
+    \toprule
+    Model & $\downarrow$ NLL & $\downarrow$ RMSE & $\uparrow$ $r$\\
+    \midrule
+    Full           & \textbf{0.938 $\pm$ 0.059}   & \textbf{0.159 $\pm$ 0.012}    & \textbf{0.85 $\pm$ 0.033} \\
+    No Causal Inference      & 1.217 $\pm$ 0.030   & 0.269 $\pm$ 0.016    & 0.451 $\pm$ 0.048 \\
+    No Mental State Inference  & 1.032 $\pm$ 0.092   & 0.203 $\pm$ 0.015    & 0.716 $\pm$ 0.066 \\
+    No Pragmatics  & 1.166 $\pm$ 0.129   & 0.192 $\pm$ 0.022    & 0.770 $\pm$ 0.070 \\
+    \bottomrule
+    \end{tabular}
+    }
+\end{table}
+
+\subsubsection{Behavioral Results}
+Across the experiments, we observed distinct patterns of causal language use, finding that people's utterance choices are sensitive to the mechanism of intervention as well as the agents' mental states and causal roles.
+
+\paragraph{Physical}
+In the physical intervention setting, participants overwhelmingly chose ``caused'' to describe scenarios in which the wizard prevented the farmer from reaching the apple (\autoref{fig:model_human}~A1). 
+In contrast, when the wizard removed an obstacle to help the farmer reach the apple, participants were split between ``enabled'' and ``allowed'', often slightly preferring ``allowed'' for this positive outcome (\autoref{fig:model_human}~A2). 
+
+
+
+\paragraph{Belief}
+In the belief domain, people's choices of utterance depended on how the wizard's action influenced the farmer's epistemic state, and how the farmer responded to such information. 
+When the wizard provided information and the farmer followed the wizard's advice, people most frequently chose ``caused'' and ``enabled'' (\autoref{fig:model_human}~B1). 
+Interestingly, unlike in the physical domain where people mostly only use ``caused'' for cases in which the wizard's action worked against the farmer's goal, people also preferred choosing ``caused'' when the wizard's information led the farmer to successfully find the gold.
+Furthermore, people chose ``enabled'' in situations where the wizard reinforced the farmer's correct guess about the gold's location (\autoref{fig:model_human}~B2), as well as situations when the wizard's action led the farmer to an undesirable outcome.
+This contrasts with the physical intervention case, where people chose ``enabled'' only when the outcome was aligned with the farmer's preference, potentially suggesting that in epistemic contexts, ``enabled'' tracks whether the agent was empowered to make an informed choice, regardless of whether the outcome was desirable.
+% trial F
+
+\paragraph{Preference}
+Finally, in the preference intervention domain, people's utterance choices depended on whether the farmer's choice was changed due to the wizard's action. 
+When the wizard's intervention led the farmer to switch options, participants strongly preferred ``caused'' (\autoref{fig:model_human}~C1).
+However, when the wizard added an apple to the option that the farmer was already walking toward, ``made no difference'' was the dominant response (\autoref{fig:model_human}~C2). People also sometimes chose ``enabled'' in the cases in which the wizard ``reinforced'' the wizard's choice (e.g., adding an apple to the right basket with the farmer was already going there).
+
+
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=\linewidth]{figures/model_scatter_row.pdf}
+    \caption{\textbf{Overall performance of each model}. Each point represents the model predicted probability compared to the proportion of participants choosing a specific causal expression in each trial. 
+    Error bars show 95\% bootstrapped confidence intervals.}
+    \label{fig:model_scatter_row}
+\end{figure*}
+
+
+
+
+\subsection{Model Comparisons}
+\autoref{fig:model_human} shows the full model predictions compared to human judgments for two scenarios in each domain. Overall, the full model achieves the best performance (see \autoref{fig:model_scatter_row} and \autoref{tab:model_comparison}).
+However, especially in the belief experiment, the model often overpredicts ``allowing'' and underpredicts ``made no difference.'' 
+This is likely because the counterfactual necessity $C$ factor averages over all possible counterfactual interventions.
+In cases where the farmer has the correct initial belief about the gold's location and the wizard decides not to act, the necessity score is moderate ($C \approx 0.5$) rather than zero, because the outcome might have differed if the wizard had shown the incorrect sign.
+The model interprets this moderate necessity combined with goal alignment as ``allowed,'' whereas humans may view the wizard's inaction as making no difference.
+
+Compared to this model, the ``No Pragmatics'' model performs worse, indicating that people selectively choose expressions that are more informative, even when several expressions are literally true.
+For instance, in the belief domain, an informational and truthful action might be literally compatible with both ``caused'' and ``enabled.''
+In these cases, the pragmatic model upweights ``enabled'' because it is more informative, whereas the semantic baseline predicts a uniform distribution over all valid terms.
+% TODO: Futhermore, without the "smoothing" alpha parameter, the predictions are very binary / peaky
+
+Similarly, the ``No Mental State Inference'' model also does not capture human judgments, suggesting that inferring the farmer's beliefs and preferences and deciding whether the wizard's intervention aligns with those beliefs and preferences contribute to better predictions of people's utterance choices.
+Because this model does not take into account whether the wizard's action was aligned with that of the farmer's preference, it often predicted ``caused'' and ``enabled'' equally.
+However, people's choices often distinguished between these terms, particularly in the physical domain.
+
+Finally, the ``No Causal Inference'' model performs the worst, highlighting that counterfactual reasoning is a significant aspect of people's utterance choices 
+(even more so than pragmatic and mental state considerations).
+Without assessing how important the wizard's action is to the farmer's outcome, this model over-attributes the wizard's causal role. 
+Even in cases in which the wizard's action was irrelevant (i.e., scenarios in which people choose ``made no difference''), the model predicted ``caused,'' ``enabled,'' or ``allowed.''
+
+
+
+\section{Discussion}
+
+% - first brief summary: 
+% - causal language in social interactions; computational model that combines causal attribution (through counterfactual simulation) with mental state inference (through Bayesian inverse planning) to define a semantics of different expressions; and uses pragmatic inference to determine which expression to use in context 
+% - tested across three experiments with different types of interventions 
+% - model ablations showed that each of the model components matter 
+% 
+% - highlight similarity and differences with Beller et al: 
+% - similar: uses the same idea of defining counterfactual contrasts over a generative model (here: it's a planning model), in Beller et al it was a physics model 
+% - different: semantic relationships between the different expressions (is caused a special case of enabled, or enabled a special case of caused?)
+% 
+% - then limitations and future directions (incl. point about semantics being determined in context); listener experiments: where the person infers what happened based on what someone said; also, here we just looked at a subset of causal expressions (there are others, like "let", "encourage", ...); and expanding in the direction of more open-ended language (via incorporating LLM knowledge in systematic ways) [i.e. going beyond toy domains]
+
+
+
+In this work, we characterize how people use causal language to describe scenarios involving agents interacting with one another.
+We present a set of experiments that involve goal-directed agents in which one agent can influence another's outcome.
+We model people's behavior using a computational model of causal language use that unifies various social scenarios involving different intervention mechanisms (physical, epistemic, and preference).
+By integrating counterfactual reasoning with mental state inference and pragmatics, our model captures the graded and context-sensitive way of how people choose between a set of expressions (``caused,'' ``enabled,'' ``allowed,'' or ``made no difference'') the one that best describes what happened.
+
+
+% TODO: if people saw all of the different intervention scenarios (i.e. if we ran a within-subjects experiment), whether we might notice different patterns
+
+Our findings suggest a different relationship between causal expressions than those previously proposed. 
+\citet{beller2025language} posited that causing is a more specific instance of enabling---that is, saying one ball's movement caused another ball's movement entails that it enabled it. 
+While this may capture how people talk about the physical domain, our findings suggest a different story in the social domain: ``caused'' acts as a broader term for causally important interventions, whereas ``enabled'' is more specifically used for interventions that successfully align with an agent's goal or preference.
+Among social agents, one cannot enable another to do what they did not want to do.
+Social context, specifically the alignment of outcomes with agents' desires, reshapes the semantic landscape of causal language.
+
+Complementing prior work, our results also suggest that the meanings of causal expressions may not be semantically fixed. 
+% TODO: fix
+For instance, in the physical intervention experiment, participants tended to use ``caused'' for outcomes with negative valence or utility (such as placing an obstacle so that the farmer gets a less preferred fruit), but not positive utility (such as removing a rock so that the farmer gets a more preferred fruit).
+In the belief experiment, participants also sometimes used ``caused'' when the wizard's information changed the farmer's outcome positively (such as when he correctly informed the farmer and the farmer found the gold).
+So, participants found it appropriate to say that the wizard caused a positive outcome when he removed an informational obstacle but not when he removed a physical obstacle.
+Beyond variation across different types of intervention, individual participants also differed in their intuitions for many of the situations. 
+We interpret this as reflecting a high degree of lexical ambiguity in the domain of social causation, in which multiple descriptions may be true. 
+In real-world scenarios, speakers may choose among true expressions based on how they prefer to frame the event \citep[e.g., exaggerate or minimize it, emphasize an agent's competence, or downplay an agent's role in influencing an outcome; see][]{rogers2017artful, macuch2024strategic}, and different speakers may resolve this lexical uncertainty differently \citep{bergen_pragmatic_2016}. 
+% For instance, speakers may use causal language to achieve certain presentational goals, such as emphasizing an agent's competence or downplaying an agent's role in influencing an outcome. 
+In our task, with no particular reason to blame or praise the wizard or farmer, participants found several descriptions appropriate.
+The extent to which causal language shapes listeners' social inferences remains an important question for future work \citep[see][]{kirfel2022inference,davis2025inference}.
+
+
+Here, we focused on a small set of causal expressions. 
+But natural language is flexible, allowing for diverse constructions that can express subtle distinctions in causal relations, responsibility, and intentionality.
+% TODO: provide 1-2 examples, maybe "despite" (idea here is that one can express the causal role an agent played, but the patient did something else) and implicit causal language, in which listeners infer causal relations across multiple utterances/sentences.
+% For example, ...
+For example, our expressions only described what \emph{did} happen, and not alternative ways of mentioning what did not (e.g., ``The wizard [prevented/blocked/saved] the farmer from getting the apple.'').
+Moving beyond these relatively simple scenarios to capture the richness of real-world discourse will involve exploring how people produce and interpret open-ended causal descriptions in naturalistic contexts.
+% Future work will explore how our model generalizes to a broader lexicon and more complex social scenarios.
+Future work will explore how our model generalizes to a broader lexicon and more complex scenarios, and how integrating dynamic social goals and their effects on speaker choices and listener inferences can advance computational models of language and social cognition.
+
+
+% \section{Acknowledgments}
+
+% References
+\clearpage
+\printbibliography
+
+\end{document}
