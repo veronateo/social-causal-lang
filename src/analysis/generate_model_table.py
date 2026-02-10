@@ -35,33 +35,12 @@ def generate_table(results_path: str = 'outputs/model_results.json',
     
     # Build the table
     lines = []
-    lines.append(r'\begin{table}[b]')
-    lines.append(r'    \caption{Model performance comparison on $5$-fold cross validation. '
-                 r'We randomly split the $38$ trials into 5 folds, fitting parameters on '
-                 r'training folds and evaluating on the held-out test fold. Values represent '
-                 r'means $\pm$ standard error for each metric are averaged on the test trials. '
-                 r'$\downarrow$ means lower values are better. ')
-    lines.append(r'    % \textit{Note}: ')
-    lines.append(r'    NLL $=$ negative log-likelihood, RMSE $=$ root mean squared error, '
-                 r'r $=$ Pearson correlation.}')
-    lines.append(r'    \label{tab:model_comparison}')
-    lines.append(r'    \centering')
-    lines.append(r'    \resizebox{\columnwidth}{!}{')
-    lines.append(r'    \begin{tabular}{lcccc}')
-    lines.append(r'    \toprule')
-    lines.append(r'    Model & $\downarrow$ NLL & $\downarrow$ RMSE & $\uparrow$ $r$\\')
-    lines.append(r'    \midrule')
     
     for key, name in models:
         nll_str  = fmt(key, 'nll')
         rmse_str = fmt(key, 'rmse')
         r_str    = fmt(key, 'r')
         lines.append(f'    {name:<30s} & {nll_str}   & {rmse_str}    & {r_str} \\\\')
-    
-    lines.append(r'    \bottomrule')
-    lines.append(r'    \end{tabular}')
-    lines.append(r'    }')
-    lines.append(r'\end{table}')
     
     table_str = '\n'.join(lines)
     

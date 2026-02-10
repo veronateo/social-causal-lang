@@ -1,19 +1,4 @@
-\begin{table}[b]
-    \caption{Model performance comparison on $5$-fold cross validation. We randomly split the $38$ trials into 5 folds, fitting parameters on training folds and evaluating on the held-out test fold. Values represent means $\pm$ standard error for each metric are averaged on the test trials. $\downarrow$ means lower values are better. 
-    % \textit{Note}: 
-    NLL $=$ negative log-likelihood, RMSE $=$ root mean squared error, r $=$ Pearson correlation.}
-    \label{tab:model_comparison}
-    \centering
-    \resizebox{\columnwidth}{!}{
-    \begin{tabular}{lcccc}
-    \toprule
-    Model & $\downarrow$ NLL & $\downarrow$ RMSE & $\uparrow$ $r$\\
-    \midrule
     Full                           & \textbf{0.966 $\pm$ 0.068}   & \textbf{0.172 $\pm$ 0.009}    & \textbf{0.819 $\pm$ 0.037} \\
     No Causal Inference            & 1.235 $\pm$ 0.037   & 0.273 $\pm$ 0.014    & 0.408 $\pm$ 0.052 \\
     No Mental State Inference      & 1.031 $\pm$ 0.092   & 0.202 $\pm$ 0.015    & 0.717 $\pm$ 0.066 \\
     No Pragmatics                  & 1.166 $\pm$ 0.129   & 0.192 $\pm$ 0.022    & 0.769 $\pm$ 0.070 \\
-    \bottomrule
-    \end{tabular}
-    }
-\end{table}
