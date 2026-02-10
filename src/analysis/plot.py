@@ -120,6 +120,7 @@ def plot_human_model_trial_comparison(all_results, domain_errors):
     Preference: G, D
     """
     fig, axes = plt.subplots(2, 3, figsize=(6.5, 3), layout='constrained')
+    fig.set_constrained_layout_pads(wspace=0.2, hspace=0.15)
     
     # Define grid targets
     targets = [
@@ -164,13 +165,14 @@ def plot_human_model_trial_comparison(all_results, domain_errors):
 
             ax.bar(x[i] + width/2, model_vals[i], width, facecolor='none', edgecolor=c, hatch='///', linewidth=0)
 
-        ax.set_title(title)
+        # ax.set_title(title)
         ax.set_xticks(x)
         ax.set_xticklabels(['C', 'E', 'A', 'N'])
         ax.set_ylim(0, 1.0)
         ax.set_yticks([0.0, 0.5, 1.0])
         
-        ax.set_ylabel("Proportion")
+        if domain == 'physical':
+            ax.set_ylabel("Proportion")
             
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
@@ -187,8 +189,8 @@ def plot_human_model_trial_comparison(all_results, domain_errors):
         Patch(facecolor='none', hatch='///', edgecolor='gray', label='Full Model', linewidth=1.0)
     ]
 
-    fig.legend(handles=legend_elements, loc='lower center', fontsize=10,
-    bbox_to_anchor=(0.5, 1.0), ncol=2, frameon=False)
+    fig.legend(handles=legend_elements, loc='upper center', fontsize=10,
+               bbox_to_anchor=(0.5, 0.0), ncol=2, frameon=False)
     
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     save_path = os.path.join(OUTPUT_DIR, "human_model.png")
