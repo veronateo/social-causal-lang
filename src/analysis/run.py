@@ -207,9 +207,6 @@ def main():
         else:
             res = fit_full_model(all_trials, ablation=ablation)
         
-        # Convert total NLL to average NLL
-        res['avg_nll'] = res['nll'] / len(all_trials)
-        print(f"Best {name}: Avg NLL={res['avg_nll']:.4f}")
         return res
 
 
@@ -251,6 +248,7 @@ def main():
     )
     final_phys_dom = PhysicalDomain(config=best_config)
     final_pref_dom = PreferenceDomain(config=best_config)
+    final_belief_dom = BeliefDomain(config=best_config)
     
     # Update states for saving detailed results
     for t in all_trials:
@@ -259,6 +257,8 @@ def main():
             t.theta = final_phys_dom.inference.infer_most_likely_theta(t.trial_data)
         elif t.domain_name == 'preference':
             t.state = final_pref_dom.get_domain_state(t.trial_data)
+        elif t.domain_name == 'belief':
+            t.state = final_belief_dom.get_domain_state(t.trial_data)
     
     # Save outputs
     other_configs = {

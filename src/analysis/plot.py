@@ -305,7 +305,7 @@ def plot_scatter_comparison(all_results, domain_errors):
             rmse = np.sqrt(np.mean((x - y)**2))
             stats_text = f"$r={r:.2f}$\nRMSE$={rmse:.2f}$"
             
-        ax.set_title(model_labels[i])
+        # ax.set_title(model_labels[i])
         
         # Add stats text in bottom-right
         ax.text(0.95, 0.05, stats_text, transform=ax.transAxes, 

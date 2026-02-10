@@ -51,8 +51,8 @@ class RSACausalVerbModel:
         Assumes uniform P(w) over world states (C, A, V).
         """
         # Create grid points for continuous dimensions
-        grid_C = np.linspace(0, 1, resolution)  # Counterfactual necessity
-        grid_V = np.linspace(0, 1, resolution)  # Value alignment
+        grid_C = np.linspace(0, 1, resolution)   # Counterfactual necessity
+        grid_V = np.linspace(0, 1, resolution)   # Value alignment
         grid_A = np.array([0.0, 1.0])            # Action (binary)
         
         # Create meshgrid for 3 dimensions
@@ -123,3 +123,4 @@ class RSACausalVerbModel:
 def softmax(x: np.ndarray) -> np.ndarray:
     e_x = np.exp(x - np.max(x))
     return e_x / e_x.sum()
+    

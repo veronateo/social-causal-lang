@@ -84,23 +84,7 @@ class PreferenceDomain(Domain):
         farmer_pos = self.inference._get_farmer_position(initial_direction)
         
         return self.inference.get_preferred_side(theta, final_config, farmer_pos)
-
-    def get_domain_state(self, trial_data: Dict[str, Any], theta: Optional[float] = None) -> WorldState:
-        # Normalize
-        data = self.normalize_trial(trial_data)
         
-        expected_dir = data.get('initial_direction')
-        actual_dir = data.get('final_outcome')
-        wizard_action = data.get('wizard_action', data.get('wizardAction', {}))
-        
-        # A — Wizard acted?
-        if isinstance(wizard_action, dict):
-            w_type = wizard_action.get('type', 'nothing')
-            acted = 1.0 if w_type != 'nothing' else 0.0
-        elif isinstance(wizard_action, str):
-            acted = 1.0 if wizard_action != 'nothing' else 0.0
-        else:
-            acted = 0.0
         
     def compute_necessity(self, trial_data: Dict[str, Any], posterior: Dict[float, float]) -> Dict[str, float]:
         """
@@ -219,11 +203,13 @@ class PreferenceDomain(Domain):
             
         # V — Value alignment: probability that actual outcome matches farmer's preference
         if self.alignment_mode == 'hard':
+            # Hard alignment: Σ P(θ|e) × I(preferred(θ) = actual)
             aligned = sum(
                 prob for t, prob in posterior.items()
                 if self._get_preferred_side(t, trial_data) == actual_dir
             )
         else:  # soft
+            # Soft alignment: Σ P(θ|e) × P(actual | θ, softmax)
             aligned = sum(
                 prob * self.inference.alignment_probability(t, actual_dir, final_config, farmer_pos)
                 for t, prob in posterior.items()
