@@ -1,0 +1,15 @@
+trial_id,num_initial_bananas_left,num_initial_apples_right,farmer_initial_direction,wizard_action,final_outcome_basket
+trial_a,1,2,left,add_apple_right,right
+trial_b,1,2,left,nothing,left
+trial_c,1,2,right,add_apple_left,left
+trial_d,1,2,right,add_apple_right,right
+trial_e,2,1,left,add_apple_left,left
+trial_f,2,1,left,add_apple_right,right
+trial_g,2,1,right,add_apple_left,left
+trial_h,2,1,right,add_apple_left,right
+trial_i,2,1,right,nothing,right
+trial_j,2,2,left,add_apple_left,left
+trial_k,2,2,left,add_apple_right,right
+trial_l,2,2,left,nothing,left
+trial_m,2,2,right,add_apple_left,left
+trial_n,2,2,right,nothing,right

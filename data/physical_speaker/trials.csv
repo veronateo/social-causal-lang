@@ -1,0 +1,11 @@
+trial_id,trial_letter,scenario_description,farmer_initial_direction_goal,wizard_action,rock_initial_present,final_outcome
+trial_a,A,"Rock absent, farmer goes toward apple, wizard places rock, farmer gets banana",apple,place_rock,False,banana
+trial_b,B,"Rock absent, farmer goes toward banana, wizard places rock, farmer gets banana",banana,place_rock,False,banana
+trial_c,C,"Rock present, farmer goes toward banana, wizard removes rock, farmer gets apple",banana,remove_rock,True,apple
+trial_d,D,"Rock present, farmer goes toward banana, wizard removes rock, farmer gets banana",banana,remove_rock,True,banana
+trial_e,E,"Rock absent, farmer goes toward apple, wizard does nothing, farmer gets apple",apple,nothing,False,apple
+trial_f,F,"Rock absent, farmer goes toward banana, wizard does nothing, farmer gets banana",banana,nothing,False,banana
+trial_g,G,"Rock present, farmer goes toward banana, wizard does nothing, farmer gets banana",banana,nothing,True,banana
+trial_h,H,"Rock present, farmer goes toward apple, wizard does nothing, farmer gets banana",apple,nothing,True,banana
+trial_i,I,"Rock present, farmer goes toward apple, wizard removes rock, farmer gets apple",apple,remove_rock,True,apple
+trial_j,J,"Rock absent, farmer goes toward banana, wizard does nothing, farmer gets apple",banana,nothing,False,apple

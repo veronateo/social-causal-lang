@@ -1,0 +1,193 @@
+/**
+ * Trials Demo Styles
+ */
+
+body {
+    font-family: Helvetica Neue, sans-serif;
+    margin: 20px;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+canvas {
+    border: 2px solid #333;
+    border-radius: 5px;
+    display: block;
+    margin: 20px auto;
+    background-color: #f8f8f8;
+}
+
+.controls {
+    text-align: center;
+    margin: 20px 0;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #6c757d;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+    opacity: 0.8;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Specific button colors */
+.play-button {
+    background-color: #28a745;
+}
+
+.stop-button {
+    background-color: #dc3545;
+}
+
+.nav-button {
+    background-color: #2196F3;
+}
+
+.next-trial-button {
+    background-color: #6f42c1;
+}
+
+.trial-selector {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.trial-selector button {
+    background-color: #bedbf9;
+    margin: 5px;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.trial-selector button:hover {
+    background-color: #bedbf9;
+}
+
+.trial-selector button.active {
+    background-color: #2196F3;
+}
+
+.scene-info {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.trial-description {
+    background-color: #e3f2fd;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+    border-left: 4px solid #2196F3;
+}
+
+.legend {
+    background-color: #fcf6e4;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+    border-left: 4px solid #f9d684;
+}
+
+.legend ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.loading {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 20px;
+}
+
+/* Question section styles */
+.question-section {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    border-left: 4px solid #2196F3;
+}
+
+.question-section h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.question-options {
+    margin: 15px 0;
+}
+
+.question-options label {
+    display: block;
+    margin: 10px 0;
+    padding: 8px;
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.question-options label:hover {
+    background-color: #e9ecef;
+}
+
+.question-options input[type="radio"] {
+    margin-right: 10px;
+}
+
+.submit-answer {
+    background-color: #2196F3;
+    margin: 10px 0;
+}
+
+.submit-answer:hover:not(:disabled) {
+    background-color: #2196F3;
+    opacity: 1;
+}
+
+.answer-feedback {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.answer-feedback.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.answer-feedback.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+} 

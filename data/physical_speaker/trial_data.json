@@ -1,0 +1,112 @@
+[
+  {
+    "trial_id": "trial_a",
+    "description": "Rock absent, farmer goes toward apple, wizard places rock, farmer gets banana",
+    "rock_initial": false,
+    "farmer_initial_direction_goal": "apple",
+    "farmer_initial_direction": "right",
+    "wizard_action": "place_rock",
+    "farmer_final_direction": "left",
+    "final_outcome": "banana",
+    "expected_verb": "caused"
+  },
+  {
+    "trial_id": "trial_b", 
+    "description": "Rock absent, farmer goes toward banana, wizard places rock, farmer gets banana",
+    "rock_initial": false,
+    "farmer_initial_direction_goal": "banana",
+    "farmer_initial_direction": "left",
+    "wizard_action": "place_rock",
+    "farmer_final_direction": "left",
+    "final_outcome": "banana",
+    "expected_verb": "made no difference"
+  },
+  {
+    "trial_id": "trial_c",
+    "description": "Rock present, farmer goes toward banana, wizard removes rock, farmer gets apple", 
+    "rock_initial": true,
+    "farmer_initial_direction_goal": "banana",
+    "farmer_initial_direction": "left",
+    "wizard_action": "remove_rock",
+    "farmer_final_direction": "right",
+    "final_outcome": "apple",
+    "expected_verb": "enabled"
+  },
+  {
+    "trial_id": "trial_d",
+    "description": "Rock present, farmer goes toward banana, wizard removes rock, farmer gets banana",
+    "rock_initial": true,
+    "farmer_initial_direction_goal": "banana",
+    "farmer_initial_direction": "left",
+    "wizard_action": "remove_rock", 
+    "farmer_final_direction": "left",
+    "final_outcome": "banana",
+    "expected_verb": "made no difference"
+  },
+  {
+    "trial_id": "trial_e",
+    "description": "Rock absent, farmer goes toward apple, wizard does nothing, farmer gets apple",
+    "rock_initial": false,
+    "farmer_initial_direction_goal": "apple",
+    "farmer_initial_direction": "right",
+    "wizard_action": "nothing",
+    "farmer_final_direction": "right",
+    "final_outcome": "apple",
+    "expected_verb": "allowed"
+  },
+  {
+    "trial_id": "trial_f",
+    "description": "Rock absent, farmer goes toward banana, wizard does nothing, farmer gets banana",
+    "rock_initial": false,
+    "farmer_initial_direction_goal": "banana", 
+    "farmer_initial_direction": "left",
+    "wizard_action": "nothing",
+    "farmer_final_direction": "left",
+    "final_outcome": "banana",
+    "expected_verb": "made no difference"
+  },
+  {
+    "trial_id": "trial_g",
+    "description": "Rock present, farmer goes toward banana, wizard does nothing, farmer gets banana",
+    "rock_initial": true,
+    "farmer_initial_direction_goal": "banana",
+    "farmer_initial_direction": "left",
+    "wizard_action": "nothing",
+    "farmer_final_direction": "left",
+    "final_outcome": "banana", 
+    "expected_verb": "made no difference"
+  },
+  {
+    "trial_id": "trial_h",
+    "description": "Rock present, farmer goes toward apple, wizard does nothing, farmer gets banana",
+    "rock_initial": true,
+    "farmer_initial_direction_goal": "apple",
+    "farmer_initial_direction": "right",
+    "wizard_action": "nothing",
+    "farmer_final_direction": "left",
+    "final_outcome": "banana",
+    "expected_verb": "caused"
+  },
+  {
+    "trial_id": "trial_i",
+    "description": "Rock present, farmer goes toward apple, wizard removes rock, farmer gets apple",
+    "rock_initial": true,
+    "farmer_initial_direction_goal": "apple",
+    "farmer_initial_direction": "right",
+    "wizard_action": "remove_rock",
+    "farmer_final_direction": "right",
+    "final_outcome": "apple",
+    "expected_verb": "enabled"
+  },
+  {
+    "trial_id": "trial_j",
+    "description": "Rock absent, farmer goes toward banana, wizard does nothing, farmer gets apple",
+    "rock_initial": false,
+    "farmer_initial_direction_goal": "banana",
+    "farmer_initial_direction": "left",
+    "wizard_action": "nothing",
+    "farmer_final_direction": "right",
+    "final_outcome": "apple",
+    "expected_verb": "allowed"
+  }
+] 
